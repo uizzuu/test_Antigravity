@@ -357,20 +357,20 @@ const TeacherManagement: React.FC = () => {
       <div className="space-y-5 animate-in slide-in-from-bottom-4 duration-500">
 
         {/* ── 권한 토글 ── */}
-        <div className="flex items-center justify-between bg-white px-5 py-3.5 rounded-2xl border border-slate-200 shadow-sm relative overflow-hidden">
+        <div className="flex items-center justify-between bg-white px-5 py-3.5 rounded-lg border border-slate-200 shadow-sm relative overflow-hidden">
           <div className="absolute left-0 top-0 bottom-0 w-2 bg-primary" />
           <div className="flex items-center gap-3">
             <div className="p-2.5 bg-blue-50 rounded-xl text-primary"><Settings size={22} /></div>
             <div>
-              <h2 className="text-base font-bold text-slate-800">테스트용 권한 변경</h2>
-              <p className="text-xs text-slate-400 mt-0.5">실제로는 로그인 계정 권한을 따릅니다.</p>
+              <h2 className="text-xl font-bold text-slate-800">테스트용 권한 변경</h2>
+              <p className="text-base text-slate-400 mt-1">실제로는 로그인 계정 권한을 따릅니다.</p>
             </div>
           </div>
           <div className="flex items-center gap-2">
-            <div className="flex bg-slate-100 p-1 rounded-lg text-sm">
+            <div className="flex bg-slate-100 p-1.5 rounded-lg text-base">
               {(['BASIC_ADMIN', 'ACHIEVEMENT_ADMIN', 'HOMEROOM', 'GENERAL'] as Role[]).map(r => (
                 <button key={r}
-                  className={`px-2 py-1 rounded-md font-medium text-[0.7rem] transition-all ${role === r ? 'bg-white shadow-sm text-primary font-bold' : 'text-slate-500 hover:text-slate-700'}`}
+                  className={`px-3 py-1.5 rounded-md font-bold text-sm transition-all ${role === r ? 'bg-white shadow-sm text-primary font-bold' : 'text-slate-500 hover:text-slate-700'}`}
                   onClick={() => setRole(r)}
                 >
                   {r === 'BASIC_ADMIN' ? '국기초관리자' : r === 'ACHIEVEMENT_ADMIN' ? '성취도관리자' : r === 'HOMEROOM' ? '담임교사' : '일반교사'}
@@ -386,29 +386,29 @@ const TeacherManagement: React.FC = () => {
 
         {/* ── 권한별 알림 ── */}
         {isAdminRole ? (
-          <div className="alert bg-blue-50/50 border border-blue-100 text-blue-800 rounded-2xl py-3">
-            <Info size={18} className="text-blue-500 shrink-0" />
-            <span className="text-sm">관리자 모드입니다. 외부회원 <strong>승인/거절</strong>, <strong>승인취소</strong>, 교사 정보 <strong>수정</strong>이 가능합니다.</span>
+          <div className="alert bg-blue-50/50 border border-blue-100 text-blue-800 rounded-lg py-4">
+            <Info size={22} className="text-blue-500 shrink-0" />
+            <span className="text-base">관리자 모드입니다. 외부회원 <strong>승인/거절</strong>, <strong>승인취소</strong>, 교사 정보 <strong>수정</strong>이 가능합니다.</span>
           </div>
         ) : (
-          <div className="alert bg-slate-50/50 border border-slate-200 text-slate-600 rounded-2xl py-3">
-            <AlertCircle size={18} className="text-slate-400 shrink-0" />
-            <span className="text-sm">현재 페이지는 <strong>조회 전용</strong>입니다. 수정 권한은 관리자(국기초 담당자)에게 있습니다.</span>
+          <div className="alert bg-slate-50/50 border border-slate-200 text-slate-600 rounded-lg py-4">
+            <AlertCircle size={22} className="text-slate-400 shrink-0" />
+            <span className="text-base">현재 페이지는 <strong>조회 전용</strong>입니다. 수정 권한은 관리자(국기초 담당자)에게 있습니다.</span>
           </div>
         )}
 
         {/* ── 검색 필터 ── */}
-        <div className="bg-white border border-slate-200 rounded-2xl shadow-sm overflow-hidden">
-          <div className="flex items-center gap-2 px-6 py-3 border-b border-slate-100 bg-slate-50/50">
-            <Building2 size={16} className="text-primary" />
-            <span className="font-black text-primary text-sm">602초등학교</span>
+        <div className="bg-white border border-slate-200 rounded-lg shadow-sm overflow-hidden">
+          <div className="flex items-center gap-2 px-6 py-4 border-b border-slate-100 bg-slate-50/50">
+            <Building2 size={20} className="text-primary" />
+            <span className="font-bold text-primary text-base">602초등학교</span>
             <span className="text-slate-300 mx-1">|</span>
             <span className="text-xs text-slate-400">교사관리</span>
           </div>
           <div className="flex flex-wrap items-end gap-3 px-6 py-5">
             <div className="space-y-1.5">
-              <label className="text-xs font-bold text-slate-600">교사구분</label>
-              <select className="select select-bordered select-sm bg-white border-slate-300 text-slate-700 w-36 font-medium"
+              <label className="text-base font-bold text-slate-700">교사구분</label>
+              <select className="select select-bordered w-36 font-sans text-base h-11 bg-white"
                 value={filterType} onChange={e => setFilterType(e.target.value)}>
                 <option value="all">전체</option>
                 <option value="homeroom">담임교사</option>
@@ -417,67 +417,67 @@ const TeacherManagement: React.FC = () => {
               </select>
             </div>
             <div className="space-y-1.5">
-              <label className="text-xs font-bold text-slate-600">학년</label>
-              <select className="select select-bordered select-sm bg-white border-slate-300 text-slate-700 w-28 font-medium"
+              <label className="text-base font-bold text-slate-700">학년</label>
+              <select className="select select-bordered w-32 font-sans text-base h-11 bg-white"
                 value={filterGrade} onChange={e => setFilterGrade(e.target.value)}>
                 <option value="all">전체</option>
                 {GRADES.map(g => <option key={g} value={g}>{g}</option>)}
               </select>
             </div>
             <div className="space-y-1.5">
-              <label className="text-xs font-bold text-slate-600">담당 과목</label>
-              <select className="select select-bordered select-sm bg-white border-slate-300 text-slate-700 w-32 font-medium"
+              <label className="text-base font-bold text-slate-700">담당 과목</label>
+              <select className="select select-bordered w-36 font-sans text-base h-11 bg-white"
                 value={filterSubject} onChange={e => setFilterSubject(e.target.value)}>
                 <option value="all">전체 과목</option>
                 {FILTER_SUBJECTS.map(s => <option key={s.key} value={s.key}>{s.label}</option>)}
               </select>
             </div>
             <div className="space-y-1.5">
-              <label className="text-xs font-bold text-slate-600">이름</label>
+              <label className="text-base font-bold text-slate-700">이름</label>
               <input type="text"
-                className="input input-bordered input-sm bg-white border-slate-300 text-slate-700 w-36 font-medium placeholder:text-slate-300"
+                className="input input-bordered w-40 font-sans text-base h-11 bg-white placeholder:text-slate-300"
                 placeholder="교사 이름" value={filterName} onChange={e => setFilterName(e.target.value)} />
             </div>
             <div className="flex gap-2 mt-auto">
-              <button className="btn btn-sm btn-ghost gap-1.5 text-slate-500 border border-slate-200" onClick={handleReset}>
-                <RefreshCw size={14} /> 초기화
+              <button className="btn h-11 btn-ghost gap-1.5 text-slate-500 border border-slate-200 text-base" onClick={handleReset}>
+                <RefreshCw size={18} /> 초기화
               </button>
-              <button className="btn btn-sm btn-primary gap-1.5 px-6 shadow-sm">
-                <Search size={14} /> 검색
+              <button className="btn h-11 btn-primary gap-1.5 px-8 shadow-sm text-base">
+                <Search size={18} /> 검색
               </button>
             </div>
           </div>
         </div>
 
         {/* ── 메인 테이블 ── */}
-        <div className="bg-white border border-slate-200 rounded-2xl overflow-hidden shadow-sm">
-          <div className="flex items-center justify-between px-5 py-3 border-b border-slate-100 bg-slate-50/50">
-            <span className="text-sm font-bold text-slate-700">총 <span className="text-primary">{filteredData.length}</span>명</span>
-            <span className="text-xs text-slate-400">※ 담임교사도 담당 과목을 직접 지정할 수 있습니다.</span>
+        <div className="bg-white border border-slate-200 rounded-lg overflow-hidden shadow-sm">
+          <div className="flex items-center justify-between px-5 py-4 border-b border-slate-100 bg-slate-50/50">
+            <span className="text-base font-bold text-slate-700">총 <span className="text-primary font-bold">{filteredData.length}</span>명</span>
+            <span className="text-sm text-slate-400">※ 담임교사도 담당 과목을 직접 지정할 수 있습니다.</span>
           </div>
           <div className="overflow-x-auto">
             <table className="table w-full text-sm">
               <thead>
-                <tr className="bg-slate-700 text-white text-xs font-bold text-center">
-                  <th className="py-3 w-12" rowSpan={2}>No.</th>
-                  <th className="border-l border-slate-600 py-3" colSpan={2}>교사 정보</th>
-                  <th className="border-l border-slate-600 py-3" colSpan={2}>교사 구분</th>
-                  <th className="border-l border-slate-600 py-3">담당 과목</th>
-                  <th className="border-l border-slate-600 py-3" colSpan={3}>확인</th>
-                  <th className="border-l border-slate-600 py-3 w-28" rowSpan={2}>관리</th>
+                <tr className="bg-slate-700 text-white text-base font-bold text-center">
+                  <th className="py-4 w-12" rowSpan={2}>No.</th>
+                  <th className="border-l border-slate-600 py-4" colSpan={2}>교사 정보</th>
+                  <th className="border-l border-slate-600 py-4" colSpan={2}>교사 구분</th>
+                  <th className="border-l border-slate-600 py-4">담당 과목</th>
+                  <th className="border-l border-slate-600 py-4" colSpan={3}>확인</th>
+                  <th className="border-l border-slate-600 py-4 w-28" rowSpan={2}>관리</th>
                 </tr>
-                <tr className="bg-slate-100 text-slate-600 text-xs font-bold text-center border-b border-slate-200">
-                  <th className="border-l border-slate-200 py-2.5 px-3">이름</th>
-                  <th className="border-l border-slate-200 py-2.5 px-3">담당학급<br /><span className="font-normal text-slate-400">(학년-반)</span></th>
-                  <th className="border-l border-slate-200 py-2.5 px-3">담임</th>
-                  <th className="border-l border-slate-200 py-2.5 px-3">일반교사</th>
-                  <th className="border-l border-slate-200 py-2.5 px-3">과목 정보</th>
-                  <th className="border-l border-slate-200 py-2.5 px-3">등록일자</th>
-                  <th className="border-l border-slate-200 py-2.5 px-3">확인 상태</th>
-                  <th className="border-l border-slate-200 py-2.5 px-3">확인자 / 일자</th>
+                <tr className="bg-slate-100 text-slate-600 text-sm font-bold text-center border-b border-slate-200">
+                  <th className="border-l border-slate-200 py-3.5 px-3">이름</th>
+                  <th className="border-l border-slate-200 py-3.5 px-3">담당학급<br /><span className="font-normal text-slate-400">(학년-반)</span></th>
+                  <th className="border-l border-slate-200 py-3.5 px-3">담임</th>
+                  <th className="border-l border-slate-200 py-3.5 px-3">일반교사</th>
+                  <th className="border-l border-slate-200 py-3.5 px-3">과목 정보</th>
+                  <th className="border-l border-slate-200 py-3.5 px-3">등록일자</th>
+                  <th className="border-l border-slate-200 py-3.5 px-3">확인 상태</th>
+                  <th className="border-l border-slate-200 py-3.5 px-3">확인자 / 일자</th>
                 </tr>
               </thead>
-              <tbody className="text-sm">
+              <tbody className="text-base text-slate-700">
                 {filteredData.length === 0 ? (
                   <tr><td colSpan={10} className="text-center py-14 text-slate-400">조회된 교사 데이터가 없습니다.</td></tr>
                 ) : (
@@ -548,14 +548,7 @@ const TeacherManagement: React.FC = () => {
                               <ShieldOff size={11} /> 승인취소
                             </button>
                           )}
-                          <button
-                            className={`btn btn-square btn-xs btn-ghost hover:bg-blue-50 hover:text-blue-600 ${!isAdminRole ? 'opacity-30 cursor-not-allowed' : 'text-slate-400'}`}
-                            disabled={!isAdminRole}
-                            onClick={() => isAdminRole && openEdit(teacher)}
-                            title="정보 수정"
-                          >
-                            <Pencil size={13} />
-                          </button>
+                          {/* 수정 버튼 제거 */}
                           <button
                             className={`btn btn-square btn-xs btn-ghost hover:bg-red-50 hover:text-red-500 ${!isAdminRole ? 'opacity-30 cursor-not-allowed' : 'text-slate-400'}`}
                             disabled={!isAdminRole}
@@ -576,7 +569,7 @@ const TeacherManagement: React.FC = () => {
 
         {/* ── 외부회원 승인 대기 섹션 ── */}
         {isAdminRole && pendingExternal.length > 0 && (
-          <div className="bg-white border border-amber-200 rounded-2xl overflow-hidden shadow-sm">
+          <div className="bg-white border border-amber-200 rounded-lg overflow-hidden shadow-sm">
             <button
               className="w-full flex items-center justify-between px-5 py-4 bg-amber-50/60 border-b border-amber-100 hover:bg-amber-50 transition-colors"
               onClick={() => setShowPendingSection(prev => !prev)}
@@ -584,7 +577,7 @@ const TeacherManagement: React.FC = () => {
               <div className="flex items-center gap-3">
                 <div className="relative">
                   <Shield size={20} className="text-amber-500" />
-                  <span className="absolute -top-1.5 -right-1.5 w-4 h-4 bg-red-500 text-white text-[9px] font-black rounded-full flex items-center justify-center">
+                  <span className="absolute -top-1.5 -right-1.5 w-4 h-4 bg-red-500 text-white text-[9px] font-bold rounded-full flex items-center justify-center">
                     {pendingExternal.length}
                   </span>
                 </div>
@@ -659,27 +652,27 @@ const TeacherManagement: React.FC = () => {
           수정 모달
       ════════════════════════════════════════ */}
       <dialog className={`modal ${editModal.open ? 'modal-open' : ''} bg-slate-900/50 backdrop-blur-sm`}>
-        <div className="modal-box bg-white max-w-lg rounded-3xl p-8 border border-slate-100 shadow-2xl">
+        <div className="modal-box bg-white max-w-lg rounded-xl p-6 border border-slate-100 shadow-lg">
           <button className="btn btn-sm btn-circle btn-ghost absolute right-4 top-4 text-slate-400"
             onClick={() => setEditModal(INITIAL_EDIT)}>
             <X size={18} />
           </button>
 
-          <h3 className="font-black text-xl text-slate-800 mb-1 flex items-center gap-2">
-            <Pencil className="text-primary" size={20} /> 교사 정보 수정
+          <h3 className="font-bold text-2xl text-slate-800 mb-1 flex items-center gap-2">
+            <Pencil className="text-primary" size={24} /> 교사 정보 수정
           </h3>
-          <p className="text-sm text-slate-400 mb-6">
-            <span className="font-bold text-slate-700">{editModal.teacher?.name}</span> 선생님의 정보를 수정합니다.
+          <p className="text-base text-slate-400 mb-6">
+            <span className="font-bold text-slate-700 text-lg">{editModal.teacher?.name}</span> 선생님의 정보를 수정합니다.
           </p>
 
           <div className="space-y-6">
 
             {/* ① 교사 구분 */}
             <div>
-              <label className="block text-sm font-bold text-slate-700 mb-2">교사 구분</label>
-              <div className="flex bg-slate-100 p-1 rounded-xl gap-1">
+              <label className="block text-base font-bold text-slate-700 mb-3">교사 구분</label>
+              <div className="flex bg-slate-100 p-1.5 rounded-xl gap-1.5">
                 <button
-                  className={`flex-1 py-2.5 rounded-lg text-sm font-bold transition-all ${
+                  className={`flex-1 py-3 rounded-lg text-base font-bold transition-all ${
                     editModal.teacherType === 'HOMEROOM' ? 'bg-white shadow text-blue-600' : 'text-slate-500 hover:text-slate-700'
                   }`}
                   onClick={() => setEditModal(prev => ({ ...prev, teacherType: 'HOMEROOM' }))}
@@ -687,7 +680,7 @@ const TeacherManagement: React.FC = () => {
                   담임교사
                 </button>
                 <button
-                  className={`flex-1 py-2.5 rounded-lg text-sm font-bold transition-all ${
+                  className={`flex-1 py-3 rounded-lg text-base font-bold transition-all ${
                     editModal.teacherType === 'GENERAL' ? 'bg-white shadow text-slate-700' : 'text-slate-500 hover:text-slate-700'
                   }`}
                   onClick={() => setEditModal(prev => ({ ...prev, teacherType: 'GENERAL' }))}
@@ -699,8 +692,8 @@ const TeacherManagement: React.FC = () => {
 
             {/* ② 담당 과목 — 담임/일반 모두 동일한 UI */}
             <div>
-              <label className="block text-sm font-bold text-slate-700 mb-1">담당 과목</label>
-              <p className="text-xs text-slate-400 mb-3">
+              <label className="block text-base font-bold text-slate-700 mb-1">담당 과목</label>
+              <p className="text-sm text-slate-400 mb-4">
                 담임교사도 담당 과목을 직접 선택할 수 있습니다. 초등 담임은 <strong className="text-blue-600">전과목</strong>을 선택하세요.
               </p>
 
@@ -710,7 +703,7 @@ const TeacherManagement: React.FC = () => {
                   const checked = editModal.subjects[opt.key];
                   const isSpecialAll   = opt.special === 'all';
                   const isSpecialOther = opt.special === 'other';
-                  const btnBase = `flex items-center justify-center gap-1.5 py-2.5 rounded-xl border-2 text-sm font-bold transition-all`;
+                  const btnBase = `flex items-center justify-center gap-1.5 py-3 rounded-xl border-2 text-base font-bold transition-all`;
                   const btnChecked = isSpecialAll
                     ? 'bg-blue-600 border-blue-600 text-white shadow-sm shadow-blue-200 col-span-2'
                     : isSpecialOther
@@ -727,7 +720,7 @@ const TeacherManagement: React.FC = () => {
                       onClick={() => toggleSubject(opt.key)}
                       className={`${btnBase} ${checked ? btnChecked : btnUnchecked}`}
                     >
-                      {checked ? <Check size={13} /> : <Plus size={13} />}
+                      {checked ? <Check size={15} /> : <Plus size={15} />}
                       {opt.label}
                     </button>
                   );
@@ -735,11 +728,11 @@ const TeacherManagement: React.FC = () => {
               </div>
 
               {/* 기타 과목 자유 입력 */}
-              <div className="flex items-center gap-2 mt-3">
-                <label className="text-xs font-bold text-slate-500 shrink-0">기타 입력:</label>
+              <div className="flex items-center gap-2 mt-4">
+                <label className="text-sm font-bold text-slate-500 shrink-0">기타 입력:</label>
                 <input
                   type="text"
-                  className="input input-bordered input-sm bg-white border-slate-300 text-slate-700 w-full font-medium placeholder:text-slate-300"
+                  className="input input-bordered w-full font-sans text-base h-11 bg-white placeholder:text-slate-300"
                   placeholder="예: 진로상담, 영어회화, 스포츠클럽 등"
                   value={editModal.subjects.other}
                   onChange={e => setEditModal(prev => ({
@@ -771,20 +764,20 @@ const TeacherManagement: React.FC = () => {
           내 회원정보(관리자 권한 신청) 모달
       ════════════════════════════════════════ */}
       <dialog className={`modal ${profileModalOpen ? 'modal-open' : ''} bg-slate-900/50 backdrop-blur-sm`}>
-        <div className="modal-box bg-white max-w-lg rounded-3xl p-8 border border-slate-100 shadow-2xl">
+        <div className="modal-box bg-white max-w-lg rounded-xl p-6 border border-slate-100 shadow-lg">
           <button className="btn btn-sm btn-circle btn-ghost absolute right-4 top-4 text-slate-400"
             onClick={() => setProfileModalOpen(false)}>
             <X size={18} />
           </button>
 
-          <h3 className="font-black text-2xl text-slate-800 mb-1 flex items-center gap-2">
+          <h3 className="font-bold text-lg text-slate-800 mb-1 flex items-center gap-2">
             <User className="text-primary" size={26} /> 내 회원정보
           </h3>
           <p className="text-sm text-slate-400 mb-6">
             현재 로그인한 <span className="font-bold text-slate-700">{myInfo?.name}</span> 선생님의 권한과 정보를 확인합니다.
           </p>
 
-          <div className="bg-slate-50 border border-slate-100 rounded-2xl p-5 mb-6 space-y-3">
+          <div className="bg-slate-50 border border-slate-100 rounded-lg p-5 mb-6 space-y-3">
              <div className="flex justify-between items-center pb-3 border-b border-slate-200/60">
                <span className="text-sm font-bold text-slate-500">현재 보유 권한</span>
                {myInfo?.adminType === 'BASIC_ADMIN' ? (

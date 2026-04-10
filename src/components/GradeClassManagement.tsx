@@ -228,32 +228,32 @@ const GradeClassManagement: React.FC = () => {
     <div className="space-y-6 animate-in slide-in-from-bottom-4 duration-500">
       
       {/* 권한 토글 헤더 (테스트용) */}
-      <div className="flex items-center justify-between bg-white px-6 py-4 rounded-2xl border border-slate-200 shadow-sm relative overflow-hidden">
+      <div className="flex items-center justify-between bg-white px-6 py-4 rounded-lg border border-slate-200 shadow-sm relative overflow-hidden">
         <div className="absolute left-0 top-0 bottom-0 w-2 bg-primary"></div>
         <div className="flex items-start gap-4">
           <div className="p-3 bg-blue-50 rounded-xl text-primary">
-            <Settings size={28} />
+            <Settings size={20} />
           </div>
           <div>
             <h2 className="text-xl font-bold text-slate-800">테스트용 권한 변경</h2>
-            <p className="text-sm text-slate-500 mt-1">실제로는 로그인한 계정의 권한을 따릅니다.</p>
+            <p className="text-base text-slate-500 mt-1">실제로는 로그인한 계정의 권한을 따릅니다.</p>
           </div>
         </div>
-        <div className="flex bg-slate-100 p-1 rounded-lg">
+        <div className="flex bg-slate-100 p-1.5 rounded-lg">
           <button 
-            className={`px-4 py-2 rounded-md text-sm font-bold transition-all ${role === 'ADMIN' ? 'bg-white shadow-sm text-primary' : 'text-slate-500 hover:text-slate-700'}`}
+            className={`px-5 py-2.5 rounded-md text-base font-bold transition-all ${role === 'ADMIN' ? 'bg-white shadow-sm text-primary' : 'text-slate-500 hover:text-slate-700'}`}
             onClick={() => setRole('ADMIN')}
           >
             국기초 담당자
           </button>
           <button 
-            className={`px-4 py-2 rounded-md text-sm font-bold transition-all ${role === 'HOMEROOM' ? 'bg-white shadow-sm text-primary' : 'text-slate-500 hover:text-slate-700'}`}
+            className={`px-5 py-2.5 rounded-md text-base font-bold transition-all ${role === 'HOMEROOM' ? 'bg-white shadow-sm text-primary' : 'text-slate-500 hover:text-slate-700'}`}
             onClick={() => setRole('HOMEROOM')}
           >
             담임교사
           </button>
           <button 
-            className={`px-4 py-2 rounded-md text-sm font-bold transition-all ${role === 'GENERAL' ? 'bg-white shadow-sm text-primary' : 'text-slate-500 hover:text-slate-700'}`}
+            className={`px-5 py-2.5 rounded-md text-base font-bold transition-all ${role === 'GENERAL' ? 'bg-white shadow-sm text-primary' : 'text-slate-500 hover:text-slate-700'}`}
             onClick={() => setRole('GENERAL')}
           >
             일반교사
@@ -263,39 +263,39 @@ const GradeClassManagement: React.FC = () => {
 
       {/* 권한별 알림 배너 */}
       {role === 'ADMIN' && (
-        <div className="alert bg-blue-50/50 border border-blue-100 text-blue-800 rounded-2xl">
-          <Info size={20} className="text-blue-500 shrink-0" />
+        <div className="alert bg-blue-50/50 border border-blue-100 text-blue-800 rounded-lg text-base">
+          <Info size={22} className="text-blue-500 shrink-0" />
           <span>현재 관리자 모드입니다. 미연결 반에 대한 <strong>수동 연결</strong> 및 <strong>전체 목록 관리</strong>가 가능합니다. 특수학교의 경우 학과별 반이 중복될 수 있으니 유의해주세요.</span>
         </div>
       )}
       {role === 'HOMEROOM' && (
-        <div className="alert bg-green-50/50 border border-green-100 text-green-800 rounded-2xl">
-          <UserCheck size={20} className="text-green-500 shrink-0" />
+        <div className="alert bg-green-50/50 border border-green-100 text-green-800 rounded-lg text-base">
+          <UserCheck size={22} className="text-green-500 shrink-0" />
           <span>선생님의 담당 학급은 <strong>교육디지털원패스</strong>를 통해 나이스평가시스템과 <strong>자동 연동</strong>됩니다.</span>
         </div>
       )}
       {role === 'GENERAL' && (
-        <div className="alert bg-slate-50/50 border border-slate-200 text-slate-700 rounded-2xl">
-          <AlertCircle size={20} className="text-slate-500 shrink-0" />
+        <div className="alert bg-slate-50/50 border border-slate-200 text-slate-700 rounded-lg text-base">
+          <AlertCircle size={22} className="text-slate-500 shrink-0" />
           <span>일반 교사 권한입니다. 현재 페이지는 <strong>조회 전용</strong>으로 제공되며 수정/연결 권한이 없습니다.</span>
         </div>
       )}
 
       {/* 상단 검색 필터 영역 */}
-      <div className="bg-white p-6 rounded-2xl border border-slate-200 shadow-sm flex flex-col md:flex-row justify-between items-start md:items-end gap-6">
+      <div className="bg-white p-5 rounded-lg border border-slate-200 shadow-sm flex flex-col md:flex-row justify-between items-start md:items-end gap-6">
         <div className="flex-1 w-full space-y-4">
-          <div className="flex items-center gap-2 text-primary font-black text-lg bg-blue-50/50 inline-flex px-4 py-1.5 rounded-full border border-blue-100">
-            <Building2 size={20} />
+          <div className="flex items-center gap-2 text-primary font-bold text-xl bg-blue-50/50 inline-flex px-5 py-2 rounded-full border border-blue-100">
+            <Building2 size={22} />
             <span>602초등학교</span>
           </div>
           
           <div className="flex flex-wrap items-center gap-3">
             {/* 학년도 */}
             <div className="space-y-1.5 w-full md:w-36">
-              <label className="text-sm font-bold text-slate-700 flex items-center gap-1.5">
-                <Calendar size={14} className="text-slate-400" /> 학년도
+              <label className="text-base font-bold text-slate-700 flex items-center gap-1.5">
+                <Calendar size={16} className="text-slate-400" /> 학년도
               </label>
-              <select className="select select-bordered w-full bg-slate-50 border-slate-300 focus:border-primary focus:ring-1 focus:ring-primary h-11 text-slate-700 font-medium font-sans">
+              <select className="select select-bordered w-full bg-slate-50 border-slate-200 focus:border-primary focus:ring-1 focus:ring-primary h-11 text-base text-slate-700 font-medium font-sans">
                 <option value="2026">2026</option>
                 <option value="2025">2025</option>
               </select>
@@ -303,22 +303,22 @@ const GradeClassManagement: React.FC = () => {
 
             {/* 학년 (다중선택 커스텀 드롭다운) */}
             <div className="space-y-1.5 w-full md:w-64" ref={dropdownRef}>
-              <label className="text-sm font-bold text-slate-700 flex items-center gap-1.5">
+              <label className="text-base font-bold text-slate-700 flex items-center gap-1.5">
                 학년 선택 (다중)
               </label>
               <div className="relative">
                 <div 
-                  className="flex items-center justify-between w-full h-11 px-4 border border-slate-300 rounded-lg bg-slate-50 cursor-pointer hover:border-slate-400 transition-colors"
+                  className="flex items-center justify-between w-full h-11 px-4 border border-slate-200 rounded-lg bg-slate-50 cursor-pointer hover:border-slate-400 transition-colors"
                   onClick={() => setDropdownOpen(!dropdownOpen)}
                 >
-                  <span className="text-sm text-slate-700 font-medium truncate">
+                  <span className="text-base text-slate-700 font-medium truncate">
                     {formatSelectedGrades(selectedGrades)}
                   </span>
-                  <ChevronDown size={16} className={`text-slate-500 transition-transform ${dropdownOpen ? 'rotate-180' : ''}`} />
+                  <ChevronDown size={18} className={`text-slate-500 transition-transform ${dropdownOpen ? 'rotate-180' : ''}`} />
                 </div>
                 
                 {dropdownOpen && (
-                  <div className="absolute z-10 w-full mt-2 bg-white border border-slate-200 rounded-xl shadow-xl py-2 max-h-60 overflow-y-auto animate-in fade-in slide-in-from-top-2">
+                  <div className="absolute z-10 w-full mt-2 bg-white border border-slate-200 rounded-lg shadow-md py-2 max-h-60 overflow-y-auto animate-in fade-in slide-in-from-top-2">
                     {GRADES.map(grade => (
                       <label 
                         key={grade} 
@@ -331,7 +331,7 @@ const GradeClassManagement: React.FC = () => {
                           checked={selectedGrades.includes(grade)}
                           onChange={() => toggleGradeSelection(grade)}
                         />
-                        <span className="text-sm font-medium text-slate-700">{grade}</span>
+                        <span className="text-base font-medium text-slate-700">{grade}</span>
                       </label>
                     ))}
                     {selectedGrades.length > 0 && (
@@ -349,8 +349,8 @@ const GradeClassManagement: React.FC = () => {
               </div>
             </div>
 
-            <button className="btn btn-primary h-11 mt-auto px-8 gap-2 shadow-md">
-              <Search size={18} /> 조회
+            <button className="btn btn-primary h-11 mt-auto px-8 gap-2 shadow-md text-base">
+              <Search size={20} /> 조회
             </button>
           </div>
         </div>
@@ -358,7 +358,7 @@ const GradeClassManagement: React.FC = () => {
         {/* 액션 버튼 */}
         <div className="w-full md:w-auto">
           <button 
-            className="btn btn-neutral w-full md:w-auto h-11 shadow-md gap-2"
+            className="btn btn-neutral w-full md:w-auto h-11 shadow-md gap-2 text-base"
             onClick={() => {
               if (role !== 'ADMIN') {
                 alert('학년반 생성은 국기초 담당자(ADMIN) 권한이 필요합니다.');
@@ -367,28 +367,28 @@ const GradeClassManagement: React.FC = () => {
               setIsCreateModalOpen(true);
             }}
           >
-            <PlusCircle size={18} />
+            <PlusCircle size={20} />
             학년반 생성
           </button>
         </div>
       </div>
 
       {/* 데이터 테이블 */}
-      <div className="bg-white border border-slate-200 rounded-2xl overflow-visible shadow-sm">
+      <div className="bg-white border border-slate-200 rounded-lg overflow-visible shadow-sm">
         <div className="overflow-x-auto">
           <table className="table w-full">
-            <thead className="bg-slate-50 text-slate-600 font-bold border-b border-slate-200 text-[13px]">
+            <thead className="bg-slate-50 text-slate-600 font-bold border-b border-slate-200 text-base">
               <tr>
-                <th className="py-4 pl-6 w-16 text-center">No.</th>
+                <th className="py-5 pl-6 w-20 text-center">No.</th>
                 <th>학년</th>
                 <th>시스템 반</th>
                 <th>나이스(NEIS) 연동 매칭</th>
                 <th>적용(연결)일자</th>
                 <th>연결 상태 / 관리자</th>
-                <th className="text-center w-32 pr-6">관리</th>
+                <th className="text-center w-40 pr-6">관리</th>
               </tr>
             </thead>
-            <tbody className="text-sm">
+            <tbody className="text-base">
               {filteredData.length === 0 ? (
                 <tr>
                   <td colSpan={7} className="text-center py-12 text-slate-500 bg-slate-50/50">
@@ -487,20 +487,20 @@ const GradeClassManagement: React.FC = () => {
           ✅ 학년반 생성 모달
       =========================== */}
       <dialog className={`modal ${isCreateModalOpen ? 'modal-open' : ''} bg-slate-900/40 backdrop-blur-sm`}>
-        <div className="modal-box bg-white max-w-lg rounded-3xl p-8 border border-slate-100 shadow-2xl">
+        <div className="modal-box bg-white max-w-lg rounded-xl p-6 border border-slate-100 shadow-lg">
           <button 
             className="btn btn-sm btn-circle btn-ghost absolute right-4 top-4 text-slate-400"
             onClick={() => setIsCreateModalOpen(false)}
           >
-            <X size={18} />
+            <X size={20} />
           </button>
-          <h3 className="font-black text-2xl text-slate-800 mb-6 flex items-center gap-2">
-            <PlusCircle className="text-primary" size={24} /> 학년반 생성
+          <h3 className="font-bold text-2xl text-slate-800 mb-6 flex items-center gap-2">
+            <PlusCircle className="text-primary" size={22} /> 학년반 생성
           </h3>
           
-          <div className="bg-blue-50/50 p-4 rounded-xl border border-blue-100 mb-6 flex gap-3 text-sm text-slate-600">
-            <Info size={20} className="text-blue-500 shrink-0 mt-0.5" />
-            <ul className="space-y-1 font-medium list-disc ml-2">
+          <div className="bg-blue-50/50 p-5 rounded-xl border border-blue-100 mb-6 flex gap-3 text-base text-slate-600">
+            <Info size={24} className="text-blue-500 shrink-0 mt-0.5" />
+            <ul className="space-y-1.5 font-medium list-disc ml-2">
               <li>시작반만 선택하여 저장할 경우 단일 반만 생성됩니다.</li>
               <li>시작반, 종료반 모두 선택 시 해당 범위의 반이 자동 생성됩니다.</li>
               <li>특수학교(학급)는 구조가 특수하므로 수동 연결을 권장합니다.</li>
@@ -509,11 +509,11 @@ const GradeClassManagement: React.FC = () => {
 
           <div className="space-y-4">
             <div className="form-control">
-              <label className="label font-bold text-slate-700">
-                <span className="label-text text-red-500 mr-1">*</span>학년도
+              <label className="label font-bold text-slate-700 text-base">
+                <span className="label-text text-red-500 mr-1 text-base">*</span>학년도
               </label>
               <select
-                className="select select-bordered bg-slate-50 w-full font-medium"
+                className="select select-bordered bg-slate-50 w-full font-medium text-base h-12"
                 value={createForm.year}
                 onChange={e => setCreateForm(f => ({ ...f, year: e.target.value }))}
               >
@@ -523,11 +523,11 @@ const GradeClassManagement: React.FC = () => {
             </div>
             
             <div className="form-control">
-              <label className="label font-bold text-slate-700">
-                <span className="label-text text-red-500 mr-1">*</span>학년
+              <label className="label font-bold text-slate-700 text-base">
+                <span className="label-text text-red-500 mr-1 text-base">*</span>학년
               </label>
               <select
-                className="select select-bordered bg-white w-full"
+                className="select select-bordered bg-white w-full text-base h-12"
                 value={createForm.grade}
                 onChange={e => setCreateForm(f => ({ ...f, grade: e.target.value }))}
               >
@@ -538,11 +538,11 @@ const GradeClassManagement: React.FC = () => {
 
             <div className="grid grid-cols-2 gap-4">
               <div className="form-control">
-                <label className="label font-bold text-slate-700">
-                  <span className="label-text text-red-500 mr-1">*</span>시작반
+                <label className="label font-bold text-slate-700 text-base">
+                  <span className="label-text text-red-500 mr-1 text-base">*</span>시작반
                 </label>
                 <select
-                  className="select select-bordered bg-white w-full"
+                  className="select select-bordered bg-white w-full text-base h-12"
                   value={createForm.startClass}
                   onChange={e => setCreateForm(f => ({ ...f, startClass: e.target.value }))}
                 >
@@ -553,9 +553,9 @@ const GradeClassManagement: React.FC = () => {
                 </select>
               </div>
               <div className="form-control">
-                <label className="label font-bold text-slate-700">종료반 (다중생성시)</label>
+                <label className="label font-bold text-slate-700 text-base">종료반 (다중생성시)</label>
                 <select
-                  className="select select-bordered bg-white w-full"
+                  className="select select-bordered bg-white w-full text-base h-12"
                   value={createForm.endClass}
                   onChange={e => setCreateForm(f => ({ ...f, endClass: e.target.value }))}
                 >
@@ -602,41 +602,41 @@ const GradeClassManagement: React.FC = () => {
           ✅ 수정 모달 (NEIS 연동 수정)
       =========================== */}
       <dialog className={`modal ${editModal.open ? 'modal-open' : ''} bg-slate-900/40 backdrop-blur-sm`}>
-        <div className="modal-box bg-white max-w-md rounded-3xl p-8 border border-slate-100 shadow-2xl">
+        <div className="modal-box bg-white max-w-md rounded-xl p-6 border border-slate-100 shadow-lg">
           <button 
             className="btn btn-sm btn-circle btn-ghost absolute right-4 top-4 text-slate-400"
             onClick={() => setEditModal(INITIAL_EDIT_MODAL)}
           >
             <X size={18} />
           </button>
-          <h3 className="font-black text-2xl text-slate-800 mb-2 flex items-center gap-2">
-            <Link2 className="text-primary" size={24} /> NEIS 연동 수정
+          <h3 className="font-bold text-2xl text-slate-800 mb-2 flex items-center gap-2">
+            <Link2 className="text-primary" size={22} /> NEIS 연동 수정
           </h3>
           {editModal.item && (
-            <p className="text-sm text-slate-500 mb-6">
-              <span className="font-bold text-slate-700">{editModal.item.grade} {editModal.item.classNum}</span>의 NEIS 연동 정보를 수정합니다.
+            <p className="text-base text-slate-500 mb-6">
+              <span className="font-bold text-slate-700 text-lg">{editModal.item.grade} {editModal.item.classNum}</span>의 NEIS 연동 정보를 수정합니다.
             </p>
           )}
 
           <div className="space-y-5">
             {/* 연동 방식 */}
             <div className="form-control">
-              <label className="label font-bold text-slate-700">연결 방식</label>
-              <div className="flex bg-slate-100 p-1 rounded-lg w-fit gap-1">
+              <label className="label font-bold text-slate-700 text-base">연결 방식</label>
+              <div className="flex bg-slate-100 p-1.5 rounded-lg w-fit gap-1">
                 <button
-                  className={`px-5 py-2 rounded-md text-sm font-bold transition-all ${editModal.linkType === 'AUTO' ? 'bg-white shadow text-green-600' : 'text-slate-500 hover:text-slate-700'}`}
+                  className={`px-5 py-2.5 rounded-md text-base font-bold transition-all ${editModal.linkType === 'AUTO' ? 'bg-white shadow text-green-600' : 'text-slate-500 hover:text-slate-700'}`}
                   onClick={() => setEditModal(m => ({ ...m, linkType: 'AUTO' }))}
                 >
                   자동 설정
                 </button>
                 <button
-                  className={`px-5 py-2 rounded-md text-sm font-bold transition-all ${editModal.linkType === 'MANUAL' ? 'bg-white shadow text-orange-600' : 'text-slate-500 hover:text-slate-700'}`}
+                  className={`px-5 py-2.5 rounded-md text-base font-bold transition-all ${editModal.linkType === 'MANUAL' ? 'bg-white shadow text-orange-600' : 'text-slate-500 hover:text-slate-700'}`}
                   onClick={() => setEditModal(m => ({ ...m, linkType: 'MANUAL' }))}
                 >
                   수동 설정
                 </button>
               </div>
-              <p className="text-xs text-slate-400 mt-1.5 font-medium">
+              <p className="text-sm text-slate-400 mt-2 font-medium">
                 {editModal.linkType === 'AUTO'
                   ? '교육디지털원패스를 통해 시스템이 자동으로 연동합니다.'
                   : '담당자가 직접 NEIS 반을 선택하여 연동합니다.'}
@@ -645,11 +645,11 @@ const GradeClassManagement: React.FC = () => {
 
             {/* NEIS 반 선택 */}
             <div className="form-control">
-              <label className="label font-bold text-slate-700">
-                <span className="text-red-500 mr-1">*</span>NEIS 연동 반
+              <label className="label font-bold text-slate-700 text-base">
+                <span className="text-red-500 mr-1 text-base">*</span>NEIS 연동 반
               </label>
               <select
-                className="select select-bordered bg-white w-full"
+                className="select select-bordered bg-white w-full text-base h-12"
                 value={editModal.neisClass}
                 onChange={e => setEditModal(m => ({ ...m, neisClass: e.target.value }))}
               >
