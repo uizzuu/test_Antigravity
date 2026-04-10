@@ -1,14 +1,11 @@
-import React, { useState } from 'react';
-import { User, Shield, X, Check, ShieldOff, Lock, Edit3, XCircle, Plus, Trash2, Search } from 'lucide-react';
+import re
+
+content = """import React, { useState } from 'react';
+import { User, Shield, X, Check, ShieldOff, Lock, Edit3, XCircle, Plus, Trash2 } from 'lucide-react';
 
 const UserInfo: React.FC = () => {
   const [isEditing, setIsEditing] = useState(false);
   const [modalOpen, setModalOpen] = useState(false);
-  
-  // 학교 검색 모달 상태
-  const [schoolModalOpen, setSchoolModalOpen] = useState(false);
-  const [schoolSearchQuery, setSchoolSearchQuery] = useState('');
-  const [editingChildId, setEditingChildId] = useState<number | null>(null);
   
   // 권한 관련 및 가짜 데이터
   const [hasBasicAdmin, setHasBasicAdmin] = useState(false);
@@ -37,7 +34,7 @@ const UserInfo: React.FC = () => {
   };
 
   const SELECTION_SUBJECTS = ['국어', '수학', '사회', '과학', '영어', '예체능', '그 외 교과'];
-  const SELECTION_TEACHER_TYPES = ['초등담임', '중/고등 담임', '교과교사', '보조교사'];
+  const SELECTION_TEACHER_TYPES = ['초등담임', '중등담임', '교과교사', '보조교사'];
   
   const isElemHomeroom = teacherTypes.includes('초등담임');
 
@@ -68,23 +65,6 @@ const UserInfo: React.FC = () => {
       setSubjects([...subjects, subj]);
     }
   };
-  
-  const handleOpenSchoolSearch = (childId: number) => {
-    setEditingChildId(childId);
-    setSchoolSearchQuery('');
-    setSchoolModalOpen(true);
-  };
-  
-  const handleSelectSchool = (schoolName: string) => {
-    if (editingChildId) {
-      updateChild(editingChildId, 'school', schoolName);
-    }
-    setSchoolModalOpen(false);
-  };
-
-  // 학교 검색 더미 데이터 로직
-  const MOCK_SCHOOLS = ['한국학교', '서울초등학교', '부산중학교', '대구고등학교', '테스트초등학교', '제주국제학교', '독도초등학교'];
-  const searchResults = schoolSearchQuery.trim() === '' ? [] : MOCK_SCHOOLS.filter(s => s.includes(schoolSearchQuery));
 
   const renderEditableInput = (item: any) => {
     if (!isEditing || !item.editable) {
@@ -105,13 +85,13 @@ const UserInfo: React.FC = () => {
 
     switch (item.inputType) {
       case 'date':
-        return <input type="date" className="input input-sm input-bordered bg-white w-full max-w-[150px]" defaultValue={typeof item.value === 'string' ? item.value.replace(/\./g, '-') : ''} />;
+        return <input type="date" className="input input-sm input-bordered bg-white w-full max-w-[150px]" defaultValue={item.value.replace(/\\./g, '-')} />;
       case 'radio':
         return (
           <div className="flex gap-4">
             {item.options.map((opt: string) => (
               <label key={opt} className="flex items-center gap-2 cursor-pointer">
-                <input type="radio" name={item.label} className="radio radio-primary radio-sm" defaultChecked={item.value === opt} />
+                <input type="radio" name={item.label} className="radio radio-primary radio-sm bg-white" defaultChecked={item.value === opt} />
                 <span className="text-sm font-medium text-slate-700">{opt}</span>
               </label>
             ))}
@@ -139,11 +119,8 @@ const UserInfo: React.FC = () => {
           <div className="space-y-2 w-full">
             {childrenList.map((c) => (
               <div key={c.id} className="flex flex-wrap gap-2 items-center bg-slate-50 p-2 rounded-lg border border-slate-200">
-                <input type="text" placeholder="이름 입력" className="input input-sm input-bordered bg-white w-20" value={c.name} onChange={(e) => updateChild(c.id, 'name', e.target.value)} />
-                <div className="flex bg-white rounded-lg overflow-hidden border border-slate-300">
-                  <input type="text" placeholder="학교 검색" className="input input-sm border-0 bg-transparent w-36 outline-none focus:outline-none" value={c.school} readOnly onClick={() => handleOpenSchoolSearch(c.id)} />
-                  <button className="btn btn-sm btn-ghost square px-2 bg-slate-100/50" onClick={() => handleOpenSchoolSearch(c.id)}><Search size={14} className="text-slate-500"/></button>
-                </div>
+                <input type="text" placeholder="이름" className="input input-sm input-bordered bg-white w-20" value={c.name} onChange={(e) => updateChild(c.id, 'name', e.target.value)} />
+                <input type="text" placeholder="학교명" className="input input-sm input-bordered bg-white w-32" value={c.school} onChange={(e) => updateChild(c.id, 'school', e.target.value)} />
                 <select className="select select-sm select-bordered w-24 bg-white" value={c.grade} onChange={(e) => updateChild(c.id, 'grade', e.target.value)}>
                   {[1,2,3,4,5,6].map(g => <option key={g} value={`${g}학년`}>{g}학년</option>)}
                 </select>
@@ -161,7 +138,7 @@ const UserInfo: React.FC = () => {
           <div className="flex flex-wrap gap-x-4 gap-y-2">
             {SELECTION_TEACHER_TYPES.map((opt: string) => (
               <label key={opt} className="flex items-center gap-2 cursor-pointer">
-                <input type="checkbox" className="checkbox checkbox-primary checkbox-sm" checked={teacherTypes.includes(opt)} onChange={() => toggleTeacherType(opt)} />
+                <input type="checkbox" className="checkbox checkbox-primary checkbox-sm bg-white" checked={teacherTypes.includes(opt)} onChange={() => toggleTeacherType(opt)} />
                 <span className="text-sm font-medium text-slate-700">{opt}</span>
               </label>
             ))}
@@ -169,13 +146,13 @@ const UserInfo: React.FC = () => {
         );
       case 'custom_subjects':
         if (isElemHomeroom) {
-          return <span className="text-sm font-bold text-primary bg-blue-50 px-3 py-1.5 rounded-md">전과목 (초등담임 선택 시 자동 적용)</span>;
+          return <span className="text-sm font-bold text-primary bg-blue-50 px-3 py-1.5 rounded-md">전과목 (초등담임 선택 시 자동 적용 부분)</span>;
         }
         return (
           <div className="flex flex-wrap gap-x-4 gap-y-2">
             {SELECTION_SUBJECTS.map((opt: string) => (
               <label key={opt} className="flex items-center gap-2 cursor-pointer">
-                <input type="checkbox" className="checkbox checkbox-primary checkbox-sm" checked={subjects.includes(opt)} onChange={() => toggleSubject(opt)} />
+                <input type="checkbox" className="checkbox checkbox-primary checkbox-sm bg-white" checked={subjects.includes(opt)} onChange={() => toggleSubject(opt)} />
                 <span className="text-sm font-medium text-slate-700">{opt}</span>
               </label>
             ))}
@@ -201,7 +178,7 @@ const UserInfo: React.FC = () => {
   ];
 
   return (
-    <div className="space-y-8 animate-in slide-in-from-bottom-4 duration-500 max-w-4xl relative">
+    <div className="space-y-8 animate-in slide-in-from-bottom-4 duration-500 max-w-4xl">
       {/* ── 상단 타이틀 구역 ── */}
       <div className="flex items-center justify-between border-b-2 border-slate-800 pb-4">
         <div>
@@ -268,54 +245,8 @@ const UserInfo: React.FC = () => {
         )}
       </div>
 
-      {/* ── 학교 검색 모달 ── */}
-      <dialog className={`modal ${schoolModalOpen ? 'modal-open' : ''} bg-slate-900/50 backdrop-blur-sm z-[100]`} style={{position:'fixed'}}>
-        <div className="modal-box bg-white max-w-sm rounded-2xl p-6 border border-slate-100 shadow-2xl">
-          <button className="btn btn-sm btn-circle btn-ghost absolute right-4 top-4 text-slate-400"
-            onClick={() => setSchoolModalOpen(false)}>
-            <X size={18} />
-          </button>
-          <h3 className="font-bold text-lg text-slate-800 mb-4">학교 검색</h3>
-          
-          <div className="flex gap-2 mb-4">
-            <input 
-              type="text" 
-              placeholder="학교명을 입력하세요 (예: 테스트)" 
-              className="input input-sm input-bordered w-full bg-white"
-              value={schoolSearchQuery}
-              onChange={(e) => setSchoolSearchQuery(e.target.value)}
-              onKeyDown={(e) => { if (e.key === 'Enter') e.preventDefault(); }}
-            />
-          </div>
-
-          <div className="bg-slate-50 border border-slate-200 rounded-lg p-2 h-40 overflow-y-auto">
-            {searchResults.length > 0 ? (
-              <ul className="space-y-1">
-                {searchResults.map(school => (
-                  <li key={school}>
-                    <button 
-                      className="w-full text-left px-3 py-2 text-sm text-slate-700 hover:bg-blue-50 hover:text-blue-700 rounded-md transition-colors"
-                      onClick={() => handleSelectSchool(school)}
-                    >
-                      {school}
-                    </button>
-                  </li>
-                ))}
-              </ul>
-            ) : (
-              <div className="flex items-center justify-center h-full text-slate-400 text-sm">
-                {schoolSearchQuery ? '검색 결과가 없습니다.' : '학교명을 검색해주세요.'}
-              </div>
-            )}
-          </div>
-        </div>
-        <form method="dialog" className="modal-backdrop" onClick={() => setSchoolModalOpen(false)}>
-          <button>닫기</button>
-        </form>
-      </dialog>
-
       {/* ── 권한 신청 모달 ── */}
-      <dialog className={`modal ${modalOpen ? 'modal-open' : ''} bg-slate-900/50 backdrop-blur-sm`} style={{position:'fixed'}}>
+      <dialog className={`modal ${modalOpen ? 'modal-open' : ''} bg-slate-900/50 backdrop-blur-sm`}>
         <div className="modal-box bg-white max-w-lg rounded-3xl p-8 border border-slate-100 shadow-2xl">
           <button className="btn btn-sm btn-circle btn-ghost absolute right-4 top-4 text-slate-400"
             onClick={() => setModalOpen(false)}>
@@ -393,3 +324,9 @@ const UserInfo: React.FC = () => {
 };
 
 export default UserInfo;
+"""
+
+with open('/Users/wuju/Desktop/test_Antigravity-main/src/components/UserInfo.tsx', 'w', encoding='utf-8') as f:
+    f.write(content)
+
+print("Done")

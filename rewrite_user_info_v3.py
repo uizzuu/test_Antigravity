@@ -1,4 +1,6 @@
-import React, { useState } from 'react';
+import re
+
+content = """import React, { useState } from 'react';
 import { User, Shield, X, Check, ShieldOff, Lock, Edit3, XCircle, Plus, Trash2, Search } from 'lucide-react';
 
 const UserInfo: React.FC = () => {
@@ -105,7 +107,7 @@ const UserInfo: React.FC = () => {
 
     switch (item.inputType) {
       case 'date':
-        return <input type="date" className="input input-sm input-bordered bg-white w-full max-w-[150px]" defaultValue={typeof item.value === 'string' ? item.value.replace(/\./g, '-') : ''} />;
+        return <input type="date" className="input input-sm input-bordered bg-white w-full max-w-[150px]" defaultValue={typeof item.value === 'string' ? item.value.replace(/\\./g, '-') : ''} />;
       case 'radio':
         return (
           <div className="flex gap-4">
@@ -393,3 +395,9 @@ const UserInfo: React.FC = () => {
 };
 
 export default UserInfo;
+"""
+
+with open('/Users/wuju/Desktop/test_Antigravity-main/src/components/UserInfo.tsx', 'w', encoding='utf-8') as f:
+    f.write(content)
+
+print("Done v3")
