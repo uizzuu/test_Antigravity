@@ -216,7 +216,7 @@ const UserInfo: React.FC = () => {
   ];
 
   return (
-    <div className="space-y-6 animate-in slide-in-from-bottom-4 duration-500 max-w-4xl relative">
+    <div className="space-y-6 animate-in slide-in-from-bottom-4 duration-500 w-full relative">
       {/* ── 상단 타이틀 구역 ── */}
       <div className="flex items-center justify-between border-b border-slate-200 pb-4">
         <div>
@@ -228,14 +228,14 @@ const UserInfo: React.FC = () => {
       </div>
 
       {/* ── 기본 정보 (dl/dt/dd 구조 레이아웃) ── */}
-      <div className="border border-slate-200 rounded-lg overflow-hidden bg-white">
+      <div className="border border-slate-200 rounded-lg overflow-hidden bg-white mt-6">
         <dl className="grid grid-cols-1 divide-y divide-slate-100">
           {ITEMS.map((item, idx) => (
             <div key={idx} className="flex flex-col sm:flex-row hover:bg-slate-50/40 transition-colors">
-              <dt className="w-full sm:w-48 bg-slate-50 text-slate-600 p-4 text-base font-bold flex items-center shrink-0 border-b sm:border-b-0 sm:border-r border-slate-100">
+              <dt className="w-full sm:w-64 bg-slate-50 text-slate-600 p-5 text-base font-bold flex items-center shrink-0 border-b sm:border-b-0 sm:border-r border-slate-100">
                 {item.label}
               </dt>
-              <dd className="p-4 flex-1 flex items-center min-h-[60px] w-full">
+              <dd className="p-5 flex-1 flex items-center min-h-[70px] w-full bg-white">
                 {renderEditableInput(item)}
               </dd>
             </div>
