@@ -56,6 +56,21 @@ const INITIAL_EDIT_MODAL: EditModalState = {
 };
 
 const GradeClassManagement: React.FC = () => {
+
+  // Helper function for dropdown format
+  const formatSelectedGrades = (grades: string[]) => {
+    if (grades.length === 0) return '전체 학년 검색';
+    const nums = grades.map(g => parseInt(g)).sort((a, b) => a - b);
+    if (nums.length <= 2) {
+      return nums.join(',') + '학년';
+    }
+    const isContiguous = nums.every((num, i) => i === 0 || num === nums[i - 1] + 1);
+    if (isContiguous) {
+      return `${nums[0]}~${nums[nums.length - 1]}학년`;
+    }
+    return nums.join(',') + '학년';
+  };
+
   // 상태 관리
   const [role, setRole] = useState<Role>('ADMIN');
   const [selectedGrades, setSelectedGrades] = useState<string[]>([]);
@@ -297,9 +312,7 @@ const GradeClassManagement: React.FC = () => {
                   onClick={() => setDropdownOpen(!dropdownOpen)}
                 >
                   <span className="text-sm text-slate-700 font-medium truncate">
-                    {selectedGrades.length === 0 
-                      ? '전체 학년 검색' 
-                      : `${selectedGrades.length}개 학년 선택됨`}
+                    {formatSelectedGrades(selectedGrades)}
                   </span>
                   <ChevronDown size={16} className={`text-slate-500 transition-transform ${dropdownOpen ? 'rotate-180' : ''}`} />
                 </div>

@@ -1,11 +1,13 @@
-import React, { useState } from 'react';
+import re
+
+content = """import React, { useState } from 'react';
 import { Search, LogIn, ArrowLeft, X } from 'lucide-react';
 import { useSearchParams, Link } from 'react-router-dom';
 
 const StudentLogin: React.FC = () => {
   const [searchParams] = useSearchParams();
   const type = searchParams.get('type');
-
+  
   // 학교 검색 모달 상태
   const [schoolModalOpen, setSchoolModalOpen] = useState(false);
   const [schoolSearchQuery, setSchoolSearchQuery] = useState('');
@@ -22,7 +24,7 @@ const StudentLogin: React.FC = () => {
   } else if (type === 'psychology') {
     config = { bgClass: 'from-slate-500 to-slate-700', title: '심리검사' };
   }
-
+  
   const handleOpenSchoolSearch = () => {
     if (!schoolLevel) {
       alert('학교급을 먼저 선택해 주세요.');
@@ -31,7 +33,7 @@ const StudentLogin: React.FC = () => {
     setSchoolSearchQuery('');
     setSchoolModalOpen(true);
   };
-
+  
   const handleSelectSchool = (schoolName: string) => {
     setSelectedSchool(schoolName);
     setSchoolModalOpen(false);
@@ -67,7 +69,7 @@ const StudentLogin: React.FC = () => {
             {/* School Selection Row */}
             <div className="flex flex-col md:flex-row gap-4">
               <div className="w-full md:w-1/3">
-                <select
+                <select 
                   className="select select-bordered w-full bg-slate-200 text-slate-700 text-lg h-14 rounded-xl border-slate-200"
                   value={schoolLevel}
                   onChange={e => {
@@ -79,16 +81,15 @@ const StudentLogin: React.FC = () => {
                   <option value="초등학교">초등학교</option>
                   <option value="중학교">중학교</option>
                   <option value="고등학교">고등학교</option>
-                  <option value="기타학교">기타학교</option>
                 </select>
               </div>
-              <div
+              <div 
                 className="w-full md:flex-1 relative cursor-pointer group"
                 onClick={handleOpenSchoolSearch}
               >
-                <input
-                  type="text"
-                  placeholder="학교급 선택 후 입력해 주세요."
+                <input 
+                  type="text" 
+                  placeholder="학교급 선택 후 입력해 주세요." 
                   className="input input-bordered w-full bg-slate-200 text-slate-700 text-lg h-14 pl-12 rounded-xl border-slate-200 cursor-pointer group-hover:border-primary transition-colors focus:outline-none"
                   value={selectedSchool}
                   readOnly
@@ -128,19 +129,19 @@ const StudentLogin: React.FC = () => {
         </div>
 
       </div>
-
+      
       {/* ── 학교 검색 모달 ── */}
-      <dialog className={`modal ${schoolModalOpen ? 'modal-open' : ''} bg-slate-900/50 backdrop-blur-sm z-[100]`} style={{ position: 'fixed' }}>
+      <dialog className={`modal ${schoolModalOpen ? 'modal-open' : ''} bg-slate-900/50 backdrop-blur-sm z-[100]`} style={{position:'fixed'}}>
         <div className="modal-box bg-white max-w-sm rounded-2xl p-6 border border-slate-100 shadow-2xl text-slate-800">
           <button className="btn btn-sm btn-circle btn-ghost absolute right-4 top-4 text-slate-400"
             onClick={() => setSchoolModalOpen(false)}>
             <X size={18} />
           </button>
           <h3 className="font-bold text-lg text-slate-800 mb-4">학교 검색</h3>
-
+          
           <div className="flex gap-2 mb-4">
-            <input
-              type="text"
+            <input 
+              type="text" 
               placeholder={`${schoolLevel} 이름을 입력하세요`}
               className="input input-sm input-bordered w-full bg-white text-slate-800"
               value={schoolSearchQuery}
@@ -154,7 +155,7 @@ const StudentLogin: React.FC = () => {
               <ul className="space-y-1">
                 {searchResults.map(school => (
                   <li key={school}>
-                    <button
+                    <button 
                       className="w-full text-left px-3 py-2 text-sm text-slate-700 hover:bg-blue-50 hover:text-blue-700 rounded-md transition-colors"
                       onClick={() => handleSelectSchool(school)}
                     >
@@ -180,3 +181,9 @@ const StudentLogin: React.FC = () => {
 };
 
 export default StudentLogin;
+"""
+
+with open('/Users/wuju/Desktop/test_Antigravity-main/src/pages/StudentLogin.tsx', 'w', encoding='utf-8') as f:
+    f.write(content)
+
+print("Added school search modal to StudentLogin")

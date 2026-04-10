@@ -271,13 +271,13 @@ const TeacherDashboard: React.FC = () => {
                 <div className="w-full md:w-auto flex-1 space-y-2">
                   <label className="text-sm font-bold text-slate-700">검색 조건 (학년반 검색)</label>
                   <div className="flex gap-2">
-                    <select className="select select-bordered bg-white w-full max-w-xs border-slate-300 text-slate-700">
-                      <option disabled selected>학년 선택</option>
+                    <select className="select select-bordered bg-white w-full max-w-xs border-slate-300 text-slate-700" defaultValue="전체">
+                      <option value="전체">전체 학년</option>
                       <option>1학년</option>
                       <option>2학년</option>
                     </select>
-                    <select className="select select-bordered bg-white w-full max-w-xs border-slate-300 text-slate-700">
-                      <option disabled selected>반 선택</option>
+                    <select className="select select-bordered bg-white w-full max-w-xs border-slate-300 text-slate-700" defaultValue="전체">
+                      <option value="전체">전체 반</option>
                       <option>1반</option>
                       <option>2반</option>
                     </select>
@@ -334,13 +334,13 @@ const TeacherDashboard: React.FC = () => {
             <div className="space-y-6 animate-in slide-in-from-bottom-4 duration-500">
                <div className="flex justify-between items-end mb-4">
                  <div className="flex gap-2">
-                    <select className="select select-bordered bg-white w-full max-w-xs border-slate-300 text-slate-700">
-                      <option disabled selected>학년 선택</option>
+                    <select className="select select-bordered bg-white w-full max-w-xs border-slate-300 text-slate-700" defaultValue="전체">
+                      <option value="전체">전체 학년</option>
                       <option>1학년</option>
                       <option>2학년</option>
                     </select>
-                    <select className="select select-bordered bg-white w-full max-w-xs border-slate-300 text-slate-700">
-                      <option disabled selected>반 선택</option>
+                    <select className="select select-bordered bg-white w-full max-w-xs border-slate-300 text-slate-700" defaultValue="전체">
+                      <option value="전체">전체 반</option>
                       <option>1반</option>
                     </select>
                     <button className="btn btn-primary px-6">조회</button>

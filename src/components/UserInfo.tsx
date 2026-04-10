@@ -8,7 +8,8 @@ const UserInfo: React.FC = () => {
   // 학교 검색 모달 상태
   const [schoolModalOpen, setSchoolModalOpen] = useState(false);
   const [schoolSearchQuery, setSchoolSearchQuery] = useState('');
-  const [editingChildId, setEditingChildId] = useState<number | null>(null);
+  const [editingSchoolTarget, setEditingSchoolTarget] = useState<number | 'self' | null>(null);
+  const [teacherSchool, setTeacherSchool] = useState('01초등학교');
   
   // 권한 관련 및 가짜 데이터
   const [hasBasicAdmin, setHasBasicAdmin] = useState(false);
@@ -69,15 +70,17 @@ const UserInfo: React.FC = () => {
     }
   };
   
-  const handleOpenSchoolSearch = (childId: number) => {
-    setEditingChildId(childId);
+  const handleOpenSchoolSearch = (target: number | 'self') => {
+    setEditingSchoolTarget(target);
     setSchoolSearchQuery('');
     setSchoolModalOpen(true);
   };
   
   const handleSelectSchool = (schoolName: string) => {
-    if (editingChildId) {
-      updateChild(editingChildId, 'school', schoolName);
+    if (editingSchoolTarget === 'self') {
+      setTeacherSchool(schoolName);
+    } else if (typeof editingSchoolTarget === 'number') {
+      updateChild(editingSchoolTarget, 'school', schoolName);
     }
     setSchoolModalOpen(false);
   };
@@ -88,6 +91,9 @@ const UserInfo: React.FC = () => {
 
   const renderEditableInput = (item: any) => {
     if (!isEditing || !item.editable) {
+      if (item.id === 'custom_school') {
+        return <span className="text-slate-600 font-medium text-sm">{teacherSchool}</span>;
+      }
       if (item.id === 'classes') {
         return <span className="text-slate-600 font-medium text-sm">{classes.map(c => `${c.grade} ${c.classNum}`).join(', ') || '지정 안됨'}</span>;
       }
@@ -115,6 +121,13 @@ const UserInfo: React.FC = () => {
                 <span className="text-sm font-medium text-slate-700">{opt}</span>
               </label>
             ))}
+          </div>
+        );
+      case 'custom_school':
+        return (
+          <div className="flex bg-white rounded-lg overflow-hidden border border-slate-300 w-full max-w-sm">
+            <input type="text" placeholder="학교 검색" className="input input-sm border-0 bg-transparent flex-1 outline-none focus:outline-none cursor-pointer" value={teacherSchool} readOnly onClick={() => handleOpenSchoolSearch('self')} />
+            <button className="btn btn-sm btn-ghost square px-2 bg-slate-100/50" onClick={() => handleOpenSchoolSearch('self')}><Search size={14} className="text-slate-500"/></button>
           </div>
         );
       case 'custom_classes':
@@ -192,7 +205,7 @@ const UserInfo: React.FC = () => {
     { label: '아이디', value: 'telm0160', editable: false },
     { label: '생년월일', value: '1980.01.01', editable: true, inputType: 'date' },
     { label: '성별', value: '남자', editable: true, inputType: 'radio', options: ['남자', '여자'] },
-    { label: '학교', value: '01초등학교', editable: false },
+    { id: 'custom_school', label: '학교', value: teacherSchool, editable: true, inputType: 'custom_school' },
     { id: 'classes', label: '학년, 반', value: [], editable: true, inputType: 'custom_classes' },
     { id: 'teacherType', label: '교사유형', value: [], editable: true, inputType: 'custom_teacherType' },
     { id: 'subjects', label: '교과목정보', value: [], editable: true, inputType: 'custom_subjects' },
