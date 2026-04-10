@@ -174,60 +174,60 @@ const TeacherDashboard: React.FC = () => {
                  ))}
                </div>
             ) : activeMenu.parent === '시험감독' && !activeMenu.child ? (
-              <div className="space-y-5 animate-in slide-in-from-bottom-4 duration-500">
-                <div className="flex flex-col md:flex-row items-end gap-4 bg-slate-50 p-5 rounded-lg border border-slate-200">
+              <div className="space-y-6 animate-in slide-in-from-bottom-4 duration-500">
+                <div className="flex flex-col md:flex-row items-end gap-4 bg-slate-50 p-6 rounded-xl border border-slate-200">
                   <div className="w-full md:w-auto flex-1 space-y-2">
-                    <label className="text-sm font-bold text-slate-600">검색 조건 (학년반 검색)</label>
+                    <label className="text-base font-bold text-slate-700 ml-1">검색 조건 (학년반 검색)</label>
                     <div className="flex flex-wrap gap-2">
-                      <select className="select select-sm select-bordered bg-white flex-1 min-w-[120px] border-slate-200 text-slate-600" defaultValue="전체">
+                      <select className="select select-bordered bg-white flex-1 min-w-[140px] border-slate-300 text-slate-700 text-base h-11" defaultValue="전체">
                         <option value="전체">전체 학년</option>
                         <option>1학년</option>
                         <option>2학년</option>
                       </select>
-                      <select className="select select-sm select-bordered bg-white flex-1 min-w-[120px] border-slate-200 text-slate-600" defaultValue="전체">
+                      <select className="select select-bordered bg-white flex-1 min-w-[140px] border-slate-300 text-slate-700 text-base h-11" defaultValue="전체">
                         <option value="전체">전체 반</option>
                         <option>1반</option>
                         <option>2반</option>
                       </select>
-                      <button className="btn btn-sm btn-primary px-6 w-full sm:w-auto">검색</button>
+                      <button className="btn btn-primary px-8 h-11 text-base shadow-sm">검색</button>
                     </div>
                   </div>
                   <div className="w-full md:w-auto">
-                    <button className="btn btn-sm btn-outline border-slate-200 text-slate-600 w-full">전체 보기</button>
+                    <button className="btn btn-outline border-slate-300 text-slate-600 bg-white h-11 px-6 text-base font-bold">전체 보기</button>
                   </div>
                 </div>
                 
-                <div className="bg-blue-50/60 text-blue-700 px-4 py-3 rounded-lg border border-blue-100 flex items-start gap-2.5 text-xs font-medium">
-                  <CheckCircle2 className="w-4 h-4 text-blue-400 shrink-0 mt-0.5" />
-                  <p>현재 <strong>[배포가 완료된 항목]</strong>만 리스트에 노출되어 시험 감독이 가능합니다.</p>
+                <div className="bg-blue-50/70 text-blue-800 px-5 py-4 rounded-xl border border-blue-100 flex items-start gap-3 shadow-sm">
+                  <CheckCircle2 className="w-5 h-5 text-blue-500 shrink-0 mt-0.5" />
+                  <p className="text-base font-medium">현재 <strong className="text-blue-600 underline underline-offset-4 decoration-2">배포가 완료된 항목</strong>만 리스트에 노출되어 시험 감독이 가능합니다.</p>
                 </div>
 
                 {/* Data Table */}
-                <div className="border border-slate-200 rounded-lg overflow-x-auto">
-                  <table className="table table-sm min-w-[600px]">
-                    <thead className="bg-slate-50 text-slate-500 text-sm font-bold border-b border-slate-200">
+                <div className="bg-white border border-slate-200 rounded-xl overflow-hidden shadow-sm">
+                  <table className="table w-full">
+                    <thead className="bg-slate-700 text-white text-base font-bold text-center">
                       <tr>
-                        <th className="py-4">No.</th>
-                        <th>검사명 (배포 완료 건)</th>
-                        <th>대상 학년반</th>
-                        <th>상태</th>
-                        <th className="text-center">액션</th>
+                        <th className="py-4 w-16">No.</th>
+                        <th className="border-l border-slate-600">검사명 (배포 완료 건)</th>
+                        <th className="border-l border-slate-600">대상 학년반</th>
+                        <th className="border-l border-slate-600">상태</th>
+                        <th className="border-l border-slate-600 w-40">액션</th>
                       </tr>
                     </thead>
-                    <tbody className="text-base text-slate-600">
-                      <tr className="hover:bg-slate-50/60 transition-colors border-b border-slate-100">
+                    <tbody className="text-base text-slate-700 text-center">
+                      <tr className="hover:bg-slate-50/60 transition-colors border-b border-slate-100 h-16">
                         <td>1</td>
-                        <td className="font-medium text-slate-700">2026학년도 1학기 기초학력 진단검사</td>
-                        <td>1학년 1반</td>
-                        <td><span className="badge badge-success badge-sm text-xs">진행중</span></td>
-                        <td className="text-center"><button className="btn btn-xs btn-primary">시험감독 입장</button></td>
+                        <td className="font-bold text-slate-800 text-left px-6">2026학년도 1학기 기초학력 진단검사</td>
+                        <td className="font-medium">1학년 1반</td>
+                        <td><span className="badge badge-success font-bold text-white px-3 py-3">진행중</span></td>
+                        <td className="px-3"><button className="btn btn-primary btn-sm font-bold px-4 shadow-sm">시험감독 입장</button></td>
                       </tr>
-                      <tr className="hover:bg-slate-50/60 transition-colors border-b border-slate-100">
+                      <tr className="hover:bg-slate-50/60 transition-colors border-b border-slate-100 h-16">
                         <td>2</td>
-                        <td className="font-medium text-slate-700">맞춤형 학업성취도 자율평가 (수학)</td>
-                        <td>전체반</td>
-                        <td><span className="badge badge-warning badge-sm text-xs">대기중</span></td>
-                        <td className="text-center"><button className="btn btn-xs btn-primary">시험감독 입장</button></td>
+                        <td className="font-bold text-slate-800 text-left px-6">맞춤형 학업성취도 자율평가 (수학)</td>
+                        <td className="font-medium">전체반</td>
+                        <td><span className="badge badge-warning font-bold text-white px-3 py-3">대기중</span></td>
+                        <td className="px-3"><button className="btn btn-primary btn-sm font-bold px-4 shadow-sm">시험감독 입장</button></td>
                       </tr>
                     </tbody>
                   </table>
@@ -239,57 +239,60 @@ const TeacherDashboard: React.FC = () => {
               <TeacherManagement />
             ) : activeMenu.parent === '학교정보관리' && activeMenu.child === '학생관리' ? (
               /* 학생관리 */
-              <div className="space-y-5 animate-in slide-in-from-bottom-4 duration-500">
-                 <div className="flex flex-col sm:flex-row justify-between items-start sm:items-end gap-4 mb-3">
-                   <div className="flex flex-wrap gap-2 w-full sm:w-auto">
-                      <select className="select select-sm select-bordered bg-white flex-1 min-w-[120px] border-slate-200 text-slate-600" defaultValue="전체">
-                        <option value="전체">전체 학년</option>
-                        <option>1학년</option>
-                        <option>2학년</option>
-                      </select>
-                      <select className="select select-sm select-bordered bg-white flex-1 min-w-[120px] border-slate-200 text-slate-600" defaultValue="전체">
-                        <option value="전체">전체 반</option>
-                        <option>1반</option>
-                      </select>
-                      <button className="btn btn-sm btn-primary px-5">조회</button>
+              <div className="space-y-6 animate-in slide-in-from-bottom-4 duration-500">
+                 <div className="flex flex-col sm:flex-row justify-between items-start sm:items-end gap-5 bg-slate-50 p-6 rounded-xl border border-slate-200 shadow-sm">
+                   <div className="w-full sm:w-auto flex-1 space-y-2">
+                     <label className="text-base font-bold text-slate-700 ml-1">학생 정보 필터</label>
+                     <div className="flex flex-wrap gap-2">
+                        <select className="select select-bordered bg-white flex-1 min-w-[140px] border-slate-300 text-slate-700 text-base h-11" defaultValue="전체">
+                          <option value="전체">전체 학년</option>
+                          <option>1학년</option>
+                          <option>2학년</option>
+                        </select>
+                        <select className="select select-bordered bg-white flex-1 min-w-[140px] border-slate-300 text-slate-700 text-base h-11" defaultValue="전체">
+                          <option value="전체">전체 반</option>
+                          <option>1반</option>
+                        </select>
+                        <button className="btn btn-primary px-8 h-11 text-base font-bold shadow-sm">조회</button>
+                     </div>
                    </div>
-                   <div className="text-xs font-medium text-slate-400">
-                     총 인원: 25명 / 가입완료: 24명
+                   <div className="text-base font-bold text-slate-500 bg-white px-5 py-2.5 rounded-lg border border-slate-200">
+                     총 인원: <span className="text-primary font-bold">25</span>명 / 가입완료: <span className="text-blue-600 font-bold">24</span>명
                    </div>
                  </div>
 
-                 <div className="border border-slate-200 rounded-lg overflow-x-auto">
-                  <table className="table table-sm min-w-[500px]">
-                    <thead className="bg-slate-50 text-slate-500 text-sm font-bold border-b border-slate-200">
+                 <div className="bg-white border border-slate-200 rounded-xl overflow-hidden shadow-sm mt-2">
+                  <table className="table w-full">
+                    <thead className="bg-slate-700 text-white text-base font-bold text-center">
                       <tr>
-                        <th className="py-4">학번</th>
-                        <th>이름</th>
-                        <th>가입 여부</th>
-                        <th>아이디</th>
-                        <th className="text-center">비밀번호 관리</th>
+                        <th className="py-4 w-24">학번</th>
+                        <th className="border-l border-slate-600">이름</th>
+                        <th className="border-l border-slate-600">가입 여부</th>
+                        <th className="border-l border-slate-600">아이디</th>
+                        <th className="border-l border-slate-600 w-44">비밀번호 관리</th>
                       </tr>
                     </thead>
-                    <tbody className="text-base text-slate-600">
-                      <tr className="hover:bg-slate-50/60 transition-colors border-b border-slate-100">
-                        <td className="font-medium text-slate-500">10101</td>
-                        <td className="font-medium text-slate-700">김학생</td>
-                        <td><span className="badge badge-success badge-sm text-xs">가입완료</span></td>
-                        <td className="text-slate-400 font-mono text-xs">stu1***</td>
-                        <td className="text-center"><button className="btn btn-xs btn-outline border-slate-200 text-slate-500">초기화</button></td>
+                    <tbody className="text-base text-slate-700 text-center">
+                      <tr className="hover:bg-slate-50/60 transition-colors border-b border-slate-100 h-16">
+                        <td className="font-bold text-slate-500">10101</td>
+                        <td className="font-bold text-slate-800">김학생</td>
+                        <td><span className="badge badge-success font-bold text-white px-3 py-3">가입완료</span></td>
+                        <td className="text-slate-500 font-mono text-sm">stu1***</td>
+                        <td><button className="btn btn-sm btn-outline border-slate-300 text-slate-600 hover:bg-slate-100 font-bold px-4">초기화</button></td>
                       </tr>
-                      <tr className="hover:bg-slate-50/60 transition-colors border-b border-slate-100">
-                        <td className="font-medium text-slate-500">10102</td>
-                        <td className="font-medium text-slate-700">이학생</td>
-                        <td><span className="badge badge-success badge-sm text-xs">가입완료</span></td>
-                        <td className="text-slate-400 font-mono text-xs">lee_***</td>
-                        <td className="text-center"><button className="btn btn-xs btn-outline border-slate-200 text-slate-500">초기화</button></td>
+                      <tr className="hover:bg-slate-50/60 transition-colors border-b border-slate-100 h-16">
+                        <td className="font-bold text-slate-500">10102</td>
+                        <td className="font-bold text-slate-800">이학생</td>
+                        <td><span className="badge badge-success font-bold text-white px-3 py-3">가입완료</span></td>
+                        <td className="text-slate-500 font-mono text-sm">lee_***</td>
+                        <td><button className="btn btn-sm btn-outline border-slate-300 text-slate-600 hover:bg-slate-100 font-bold px-4">초기화</button></td>
                       </tr>
-                      <tr className="hover:bg-slate-50/60 transition-colors border-b border-slate-100">
-                        <td className="font-medium text-slate-500">10103</td>
-                        <td className="font-medium text-slate-700">박학생</td>
-                        <td><span className="badge badge-error badge-sm text-xs text-white">미가입</span></td>
-                        <td className="text-slate-300 font-mono text-xs">-</td>
-                        <td className="text-center">-</td>
+                      <tr className="hover:bg-slate-50/60 transition-colors border-b border-slate-100 h-16">
+                        <td className="font-bold text-slate-500">10103</td>
+                        <td className="font-bold text-slate-800">박학생</td>
+                        <td><span className="badge badge-error font-bold text-white px-3 py-3">미가입</span></td>
+                        <td className="text-slate-400 font-mono text-sm italic">-</td>
+                        <td className="text-slate-400 font-bold">-</td>
                       </tr>
                     </tbody>
                   </table>

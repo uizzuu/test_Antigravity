@@ -379,9 +379,9 @@ const TeacherManagement: React.FC = () => {
             <span className="text-xs text-slate-400">교사관리</span>
           </div>
           <div className="flex flex-wrap items-end gap-3 px-6 py-5">
-            <div className="space-y-1.5">
-              <label className="text-base font-bold text-slate-700">교사구분</label>
-              <select className="select select-bordered w-36 font-sans text-base h-11 bg-white"
+            <div className="space-y-2.5">
+              <label className="block text-base font-bold text-slate-700 ml-1">교사구분</label>
+              <select className="select select-bordered w-36 font-sans text-base h-11 bg-white focus:outline-none focus:ring-0 focus:border-blue-400"
                 value={filterType} onChange={e => setFilterType(e.target.value)}>
                 <option value="all">전체</option>
                 <option value="homeroom">담임교사</option>
@@ -389,26 +389,26 @@ const TeacherManagement: React.FC = () => {
                 <option value="external">외부회원(승인)</option>
               </select>
             </div>
-            <div className="space-y-1.5">
-              <label className="text-base font-bold text-slate-700">학년</label>
-              <select className="select select-bordered w-32 font-sans text-base h-11 bg-white"
+            <div className="space-y-2.5">
+              <label className="block text-base font-bold text-slate-700 ml-1">학년</label>
+              <select className="select select-bordered w-32 font-sans text-base h-11 bg-white focus:outline-none focus:ring-0 focus:border-blue-400"
                 value={filterGrade} onChange={e => setFilterGrade(e.target.value)}>
                 <option value="all">전체</option>
                 {GRADES.map(g => <option key={g} value={g}>{g}</option>)}
               </select>
             </div>
-            <div className="space-y-1.5">
-              <label className="text-base font-bold text-slate-700">담당 과목</label>
-              <select className="select select-bordered w-36 font-sans text-base h-11 bg-white"
+            <div className="space-y-2.5">
+              <label className="block text-base font-bold text-slate-700 ml-1">담당 과목</label>
+              <select className="select select-bordered w-36 font-sans text-base h-11 bg-white focus:outline-none focus:ring-0 focus:border-blue-400"
                 value={filterSubject} onChange={e => setFilterSubject(e.target.value)}>
                 <option value="all">전체 과목</option>
                 {FILTER_SUBJECTS.map(s => <option key={s.key} value={s.key}>{s.label}</option>)}
               </select>
             </div>
-            <div className="space-y-1.5">
-              <label className="text-base font-bold text-slate-700">이름</label>
+            <div className="space-y-2.5">
+              <label className="block text-base font-bold text-slate-700 ml-1">이름</label>
               <input type="text"
-                className="input input-bordered w-40 font-sans text-base h-11 bg-white placeholder:text-slate-300"
+                className="input input-bordered w-40 font-sans text-base h-11 bg-white placeholder:text-slate-300 focus:outline-none focus:ring-0 focus:border-blue-400"
                 placeholder="교사 이름" value={filterName} onChange={e => setFilterName(e.target.value)} />
             </div>
             <div className="flex gap-2 mt-auto">
@@ -439,15 +439,15 @@ const TeacherManagement: React.FC = () => {
                   <th className="border-l border-slate-600 py-4" colSpan={3}>확인</th>
                   <th className="border-l border-slate-600 py-4 w-28" rowSpan={2}>관리</th>
                 </tr>
-                <tr className="bg-slate-100 text-slate-600 text-sm font-bold text-center border-b border-slate-200">
-                  <th className="border-l border-slate-200 py-3.5 px-3">이름</th>
-                  <th className="border-l border-slate-200 py-3.5 px-3">담당학급<br /><span className="font-normal text-slate-400">(학년-반)</span></th>
-                  <th className="border-l border-slate-200 py-3.5 px-3">담임</th>
-                  <th className="border-l border-slate-200 py-3.5 px-3">일반교사</th>
-                  <th className="border-l border-slate-200 py-3.5 px-3">과목 정보</th>
-                  <th className="border-l border-slate-200 py-3.5 px-3">등록일자</th>
-                  <th className="border-l border-slate-200 py-3.5 px-3">확인 상태</th>
-                  <th className="border-l border-slate-200 py-3.5 px-3">확인자 / 일자</th>
+                <tr className="bg-slate-700 text-white text-base font-bold text-center border-t border-slate-600">
+                  <th className="border-l border-slate-600 py-4 px-3">이름</th>
+                  <th className="border-l border-slate-600 py-4 px-3">담당학급<br /><span className="font-normal text-slate-300 text-sm">(학년-반)</span></th>
+                  <th className="border-l border-slate-600 py-4 px-3">담임</th>
+                  <th className="border-l border-slate-600 py-4 px-3">일반교사</th>
+                  <th className="border-l border-slate-600 py-4 px-3">과목 정보</th>
+                  <th className="border-l border-slate-600 py-4 px-3">등록일자</th>
+                  <th className="border-l border-slate-600 py-4 px-3">확인 상태</th>
+                  <th className="border-l border-slate-600 py-4 px-3">확인자 / 일자</th>
                 </tr>
               </thead>
               <tbody className="text-base text-slate-700">

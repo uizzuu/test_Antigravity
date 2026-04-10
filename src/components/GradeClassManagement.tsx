@@ -291,19 +291,19 @@ const GradeClassManagement: React.FC = () => {
           
           <div className="flex flex-wrap items-center gap-3">
             {/* 학년도 */}
-            <div className="space-y-1.5 w-full md:w-36">
-              <label className="text-base font-bold text-slate-700 flex items-center gap-1.5">
+            <div className="space-y-2.5 w-full md:w-36">
+              <label className="block text-base font-bold text-slate-700 flex items-center gap-1.5 ml-1">
                 <Calendar size={16} className="text-slate-400" /> 학년도
               </label>
-              <select className="select select-bordered w-full bg-slate-50 border-slate-200 focus:border-primary focus:ring-1 focus:ring-primary h-11 text-base text-slate-700 font-medium font-sans">
+              <select className="select select-bordered w-full bg-white border-slate-300 focus:outline-none focus:ring-0 focus:border-blue-400 h-11 text-base text-slate-700 font-medium font-sans">
                 <option value="2026">2026</option>
                 <option value="2025">2025</option>
               </select>
             </div>
 
             {/* 학년 (다중선택 커스텀 드롭다운) */}
-            <div className="space-y-1.5 w-full md:w-64" ref={dropdownRef}>
-              <label className="text-base font-bold text-slate-700 flex items-center gap-1.5">
+            <div className="space-y-2.5 w-full md:w-64" ref={dropdownRef}>
+              <label className="block text-base font-bold text-slate-700 flex items-center gap-1.5 ml-1">
                 학년 선택 (다중)
               </label>
               <div className="relative">
@@ -377,15 +377,15 @@ const GradeClassManagement: React.FC = () => {
       <div className="bg-white border border-slate-200 rounded-lg overflow-visible shadow-sm">
         <div className="overflow-x-auto">
           <table className="table w-full">
-            <thead className="bg-slate-50 text-slate-600 font-bold border-b border-slate-200 text-base">
+            <thead className="bg-slate-700 text-white font-bold text-base">
               <tr>
                 <th className="py-5 pl-6 w-20 text-center">No.</th>
-                <th>학년</th>
-                <th>시스템 반</th>
-                <th>나이스(NEIS) 연동 매칭</th>
-                <th>적용(연결)일자</th>
-                <th>연결 상태 / 관리자</th>
-                <th className="text-center w-40 pr-6">관리</th>
+                <th className="border-l border-slate-600">학년</th>
+                <th className="border-l border-slate-600">시스템 반</th>
+                <th className="border-l border-slate-600">나이스(NEIS) 연동 매칭</th>
+                <th className="border-l border-slate-600">적용(연결)일자</th>
+                <th className="border-l border-slate-600">연결 상태 / 관리자</th>
+                <th className="border-l border-slate-600 text-center w-40 pr-6">관리</th>
               </tr>
             </thead>
             <tbody className="text-base">
