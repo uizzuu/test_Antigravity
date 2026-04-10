@@ -3,11 +3,12 @@ import {
   Building2, Search, RefreshCw, ChevronDown, ChevronUp,
   Info, AlertCircle, Check, X,
   UserCheck, Pencil, Trash2, Bell, Shield,
-  BookOpen, Settings, ShieldOff, Plus
+  BookOpen, Settings, ShieldOff, Plus, User
 } from 'lucide-react';
 
 // ─── 타입 정의 ────────────────────────────────────────
-type Role = 'ADMIN' | 'HOMEROOM' | 'GENERAL';
+type Role = 'BASIC_ADMIN' | 'ACHIEVEMENT_ADMIN' | 'HOMEROOM' | 'GENERAL';
+type AdminType = 'BASIC_ADMIN' | 'ACHIEVEMENT_ADMIN';
 type TeacherType = 'HOMEROOM' | 'GENERAL';
 type ApprovalStatus = 'CONFIRMED' | 'PENDING' | 'REJECTED';
 
@@ -31,6 +32,7 @@ interface Teacher {
   hasNeis: boolean;
   assignedClasses: string[];   // 담당 학급 (표시용 유지)
   teacherType: TeacherType;
+  adminType?: AdminType | null;
   subjects: SubjectInfo;
   registeredDate: string;
   approvalStatus: ApprovalStatus;
@@ -42,6 +44,7 @@ interface EditModalState {
   open: boolean;
   teacher: Teacher | null;
   teacherType: TeacherType;
+  adminType?: AdminType | null;
   subjects: SubjectInfo;
 }
 
@@ -85,6 +88,7 @@ const MOCK_DATA: Teacher[] = [
     id: 1, name: '김담임', hasNeis: true,
     assignedClasses: ['3-9', '5-1'],
     teacherType: 'HOMEROOM',
+    adminType: 'BASIC_ADMIN',
     subjects: { ...EMPTY_SUBJECTS, allSubjects: true },
     registeredDate: '2026.02.26', approvalStatus: 'CONFIRMED',
     confirmedBy: '관리자(0610)', confirmedDate: '2026.04.06',
@@ -93,6 +97,7 @@ const MOCK_DATA: Teacher[] = [
     id: 2, name: '이담임', hasNeis: true,
     assignedClasses: ['3-5'],
     teacherType: 'HOMEROOM',
+    adminType: 'ACHIEVEMENT_ADMIN',
     subjects: { ...EMPTY_SUBJECTS, allSubjects: true },
     registeredDate: '2026.02.26', approvalStatus: 'CONFIRMED',
     confirmedBy: '관리자(0610)', confirmedDate: '2026.03.27',
@@ -158,9 +163,41 @@ const MOCK_DATA: Teacher[] = [
 
 // ─── 메인 컴포넌트 ─────────────────────────────────────
 const TeacherManagement: React.FC = () => {
-  const [role, setRole] = useState<Role>('ADMIN');
+  const [role, setRole] = useState<Role>('BASIC_ADMIN');
   const [data, setData] = useState<Teacher[]>(MOCK_DATA);
   const [editModal, setEditModal] = useState<EditModalState>(INITIAL_EDIT);
+
+  const [profileModalOpen, setProfileModalOpen] = useState(false);
+
+  const isAdminRole = role === 'BASIC_ADMIN' || role === 'ACHIEVEMENT_ADMIN';
+
+  const maxAdmins = 6; // 초등학교 기준
+  const currentAdmins = data.filter(t => t.adminType != null);
+  const isQuotaFull = currentAdmins.length >= maxAdmins;
+  
+  // 내 정보용 모의 ID (상단 롤에 따라 매칭)
+  const myMockId = role === 'BASIC_ADMIN' ? 1 : role === 'ACHIEVEMENT_ADMIN' ? 2 : role === 'HOMEROOM' ? 3 : 4;
+  const myInfo = data.find(t => t.id === myMockId);
+  
+  const handleRequestAdmin = (type: AdminType) => {
+    if (isQuotaFull) {
+      alert('관리자 정원이 꽉 차서 신청할 수 없습니다. 기존 관리자가 권한을 포기해야 합니다.');
+      return;
+    }
+    if (confirm('관리자 권한을 신청하시겠습니까? (자동 승인 데모)')) {
+      setData(prev => prev.map(t => t.id === myMockId ? { ...t, adminType: type } : t));
+      setRole(type);
+      alert('관리자 권한이 부여되었습니다.');
+    }
+  };
+
+  const handleRevokeMyAdmin = () => {
+    if (confirm('정말로 관리자 권한을 취소(포기)하시겠습니까?\n(해당 권한 취소해도 교사 데이터는 삭제되지 않습니다)')) {
+      setData(prev => prev.map(t => t.id === myMockId ? { ...t, adminType: null } : t));
+      setRole('HOMEROOM');
+      alert('관리자 권한이 취소되었습니다.');
+    }
+  };
 
   const [filterType, setFilterType] = useState<string>('all');
   const [filterGrade, setFilterGrade] = useState<string>('all');
@@ -329,20 +366,26 @@ const TeacherManagement: React.FC = () => {
               <p className="text-xs text-slate-400 mt-0.5">실제로는 로그인 계정 권한을 따릅니다.</p>
             </div>
           </div>
-          <div className="flex bg-slate-100 p-1 rounded-lg text-sm">
-            {(['ADMIN', 'HOMEROOM', 'GENERAL'] as Role[]).map(r => (
-              <button key={r}
-                className={`px-4 py-1.5 rounded-md font-bold transition-all ${role === r ? 'bg-white shadow-sm text-primary' : 'text-slate-500 hover:text-slate-700'}`}
-                onClick={() => setRole(r)}
-              >
-                {r === 'ADMIN' ? '국기초 담당자' : r === 'HOMEROOM' ? '담임교사' : '일반교사'}
-              </button>
-            ))}
+          <div className="flex items-center gap-2">
+            <div className="flex bg-slate-100 p-1 rounded-lg text-sm">
+              {(['BASIC_ADMIN', 'ACHIEVEMENT_ADMIN', 'HOMEROOM', 'GENERAL'] as Role[]).map(r => (
+                <button key={r}
+                  className={`px-2 py-1 rounded-md font-medium text-[0.7rem] transition-all ${role === r ? 'bg-white shadow-sm text-primary font-bold' : 'text-slate-500 hover:text-slate-700'}`}
+                  onClick={() => setRole(r)}
+                >
+                  {r === 'BASIC_ADMIN' ? '국기초관리자' : r === 'ACHIEVEMENT_ADMIN' ? '성취도관리자' : r === 'HOMEROOM' ? '담임교사' : '일반교사'}
+                </button>
+              ))}
+            </div>
+            <button className="btn btn-sm btn-outline btn-primary font-bold gap-1 rounded-lg ml-2" onClick={() => setProfileModalOpen(true)}>
+              <User size={15} />
+              권한신청
+            </button>
           </div>
         </div>
 
         {/* ── 권한별 알림 ── */}
-        {role === 'ADMIN' ? (
+        {isAdminRole ? (
           <div className="alert bg-blue-50/50 border border-blue-100 text-blue-800 rounded-2xl py-3">
             <Info size={18} className="text-blue-500 shrink-0" />
             <span className="text-sm">관리자 모드입니다. 외부회원 <strong>승인/거절</strong>, <strong>승인취소</strong>, 교사 정보 <strong>수정</strong>이 가능합니다.</span>
@@ -494,11 +537,11 @@ const TeacherManagement: React.FC = () => {
                           {!teacher.hasNeis && teacher.approvalStatus === 'CONFIRMED' && (
                             <button
                               className={`btn btn-xs gap-1 font-bold whitespace-nowrap ${
-                                role === 'ADMIN'
+                                isAdminRole
                                   ? 'bg-amber-100 hover:bg-amber-200 text-amber-700 border-0'
                                   : 'opacity-30 cursor-not-allowed bg-amber-100 text-amber-700 border-0'
                               }`}
-                              disabled={role !== 'ADMIN'}
+                              disabled={!isAdminRole}
                               onClick={() => handleRevokeApproval(teacher.id)}
                               title="승인 취소"
                             >
@@ -506,16 +549,16 @@ const TeacherManagement: React.FC = () => {
                             </button>
                           )}
                           <button
-                            className={`btn btn-square btn-xs btn-ghost hover:bg-blue-50 hover:text-blue-600 ${role !== 'ADMIN' ? 'opacity-30 cursor-not-allowed' : 'text-slate-400'}`}
-                            disabled={role !== 'ADMIN'}
-                            onClick={() => role === 'ADMIN' && openEdit(teacher)}
+                            className={`btn btn-square btn-xs btn-ghost hover:bg-blue-50 hover:text-blue-600 ${!isAdminRole ? 'opacity-30 cursor-not-allowed' : 'text-slate-400'}`}
+                            disabled={!isAdminRole}
+                            onClick={() => isAdminRole && openEdit(teacher)}
                             title="정보 수정"
                           >
                             <Pencil size={13} />
                           </button>
                           <button
-                            className={`btn btn-square btn-xs btn-ghost hover:bg-red-50 hover:text-red-500 ${role !== 'ADMIN' ? 'opacity-30 cursor-not-allowed' : 'text-slate-400'}`}
-                            disabled={role !== 'ADMIN'}
+                            className={`btn btn-square btn-xs btn-ghost hover:bg-red-50 hover:text-red-500 ${!isAdminRole ? 'opacity-30 cursor-not-allowed' : 'text-slate-400'}`}
+                            disabled={!isAdminRole}
                             onClick={() => handleDelete(teacher.id)}
                             title="삭제"
                           >
@@ -532,7 +575,7 @@ const TeacherManagement: React.FC = () => {
         </div>
 
         {/* ── 외부회원 승인 대기 섹션 ── */}
-        {role === 'ADMIN' && pendingExternal.length > 0 && (
+        {isAdminRole && pendingExternal.length > 0 && (
           <div className="bg-white border border-amber-200 rounded-2xl overflow-hidden shadow-sm">
             <button
               className="w-full flex items-center justify-between px-5 py-4 bg-amber-50/60 border-b border-amber-100 hover:bg-amber-50 transition-colors"
@@ -720,6 +763,87 @@ const TeacherManagement: React.FC = () => {
           </div>
         </div>
         <form method="dialog" className="modal-backdrop" onClick={() => setEditModal(INITIAL_EDIT)}>
+          <button>닫기</button>
+        </form>
+      </dialog>
+
+      {/* ════════════════════════════════════════
+          내 회원정보(관리자 권한 신청) 모달
+      ════════════════════════════════════════ */}
+      <dialog className={`modal ${profileModalOpen ? 'modal-open' : ''} bg-slate-900/50 backdrop-blur-sm`}>
+        <div className="modal-box bg-white max-w-lg rounded-3xl p-8 border border-slate-100 shadow-2xl">
+          <button className="btn btn-sm btn-circle btn-ghost absolute right-4 top-4 text-slate-400"
+            onClick={() => setProfileModalOpen(false)}>
+            <X size={18} />
+          </button>
+
+          <h3 className="font-black text-2xl text-slate-800 mb-1 flex items-center gap-2">
+            <User className="text-primary" size={26} /> 내 회원정보
+          </h3>
+          <p className="text-sm text-slate-400 mb-6">
+            현재 로그인한 <span className="font-bold text-slate-700">{myInfo?.name}</span> 선생님의 권한과 정보를 확인합니다.
+          </p>
+
+          <div className="bg-slate-50 border border-slate-100 rounded-2xl p-5 mb-6 space-y-3">
+             <div className="flex justify-between items-center pb-3 border-b border-slate-200/60">
+               <span className="text-sm font-bold text-slate-500">현재 보유 권한</span>
+               {myInfo?.adminType === 'BASIC_ADMIN' ? (
+                 <span className="badge bg-blue-100 text-blue-700 font-bold border-0 px-2 py-3">국가기초학력 관리자</span>
+               ) : myInfo?.adminType === 'ACHIEVEMENT_ADMIN' ? (
+                 <span className="badge bg-purple-100 text-purple-700 font-bold border-0 px-2 py-3">학업성취도평가 관리자</span>
+               ) : (
+                 <span className="text-slate-400 font-medium text-sm">관리자 권한 없음</span>
+               )}
+             </div>
+             <div>
+                <div className="flex justify-between items-end mb-2 mt-1">
+                  <span className="text-sm font-bold text-slate-600">등록된 관리자 현황</span>
+                  <span className="text-xs font-bold font-mono text-primary bg-blue-50 px-2 py-1 rounded-md">({currentAdmins.length}/{maxAdmins}명)</span>
+                </div>
+                <div className="bg-white border border-slate-200 rounded-lg p-3 max-h-32 overflow-y-auto space-y-1.5">
+                  {currentAdmins.map(admin => (
+                    <div key={admin.id} className="flex justify-between text-xs items-center p-1 border-b border-slate-50 last:border-0 hover:bg-slate-50">
+                      <span className="font-bold text-slate-700">{admin.name}</span>
+                      <span className="text-slate-500 font-medium">{admin.adminType === 'BASIC_ADMIN' ? '국가기초학력 관리자' : '학업성취도 관리자'}</span>
+                    </div>
+                  ))}
+                  {currentAdmins.length === 0 && <div className="text-xs text-slate-400 text-center py-2">등록된 관리자가 없습니다.</div>}
+                </div>
+             </div>
+          </div>
+
+          <div className="flex flex-col gap-3">
+             {myInfo?.adminType ? (
+               <button className="btn w-full bg-red-50 hover:bg-red-100 text-red-600 border-red-200 font-bold h-12 rounded-xl text-base" onClick={handleRevokeMyAdmin}>
+                 <ShieldOff size={18} className="mr-1" /> 내 관리자 권한 취소(포기)
+               </button>
+             ) : (
+               <>
+                 <button 
+                   className="btn w-full btn-primary font-bold h-12 rounded-xl text-base shadow-sm" 
+                   disabled={isQuotaFull}
+                   onClick={() => handleRequestAdmin('BASIC_ADMIN')}
+                 >
+                   국가기초학력 관리자 권한 신청
+                 </button>
+                 <button 
+                   className="btn w-full btn-secondary font-bold h-12 rounded-xl text-base shadow-sm bg-purple-600 hover:bg-purple-700 border-purple-600 text-white" 
+                   disabled={isQuotaFull}
+                   onClick={() => handleRequestAdmin('ACHIEVEMENT_ADMIN')}
+                 >
+                   학업성취도평가 관리자 권한 신청
+                 </button>
+                 {isQuotaFull && (
+                   <div className="text-center text-xs text-red-500 font-medium mt-1">
+                     <AlertCircle size={12} className="inline mr-1 mb-0.5" />
+                     정원({maxAdmins}명)이 꽉 차서 신청할 수 없습니다.
+                   </div>
+                 )}
+               </>
+             )}
+          </div>
+        </div>
+        <form method="dialog" className="modal-backdrop" onClick={() => setProfileModalOpen(false)}>
           <button>닫기</button>
         </form>
       </dialog>

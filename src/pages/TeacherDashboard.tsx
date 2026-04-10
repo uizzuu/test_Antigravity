@@ -1,10 +1,12 @@
 import React, { useState } from 'react';
 import { 
   School, Settings, Users, BarChart3, BookOpenCheck, FolderOpen, 
-  ChevronRight, ChevronDown, CheckCircle2, ChevronRightCircle, Home
+  ChevronRight, ChevronDown, CheckCircle2, ChevronRightCircle, Home,
+  User
 } from 'lucide-react';
 import GradeClassManagement from '../components/GradeClassManagement';
 import TeacherManagement from '../components/TeacherManagement';
+import UserInfo from '../components/UserInfo';
 
 type MenuState = {
   parent: string;
@@ -15,16 +17,16 @@ type MenuItem = {
   title: string;
   desc?: string;
   icon: React.ReactNode;
-  children: { name: string; desc?: string; }[];
+  children: { name: string; desc?: string; badge?: string | number; }[];
 };
 
 const MENU_DATA: MenuItem[] = [
   {
-    title: '학교정보',
+    title: '학교정보관리',
     icon: <School size={20} />,
     children: [
       { name: '학년반관리' },
-      { name: '교사' },
+      { name: '교사관리', badge: 'N' },
       { name: '학생관리', desc: '(가입 여부, 아이디/비밀번호 확인 등)' },
       { name: '전문지원요청' },
     ]
@@ -64,12 +66,17 @@ const MENU_DATA: MenuItem[] = [
     title: '자료실',
     icon: <FolderOpen size={20} />,
     children: [] // 단일 메뉴
+  },
+  {
+    title: '회원정보',
+    icon: <User size={20} />,
+    children: [] // 단일 메뉴
   }
 ];
 
 const TeacherDashboard: React.FC = () => {
   const [activeMenu, setActiveMenu] = useState<MenuState>({ parent: '' });
-  const [expandedParents, setExpandedParents] = useState<string[]>(['학교정보']);
+  const [expandedParents, setExpandedParents] = useState<string[]>(['학교정보관리']);
 
   const toggleParent = (parent: string) => {
     if (expandedParents.includes(parent)) {
@@ -168,11 +175,16 @@ const TeacherDashboard: React.FC = () => {
                                   : 'text-slate-500 hover:bg-slate-50 hover:text-slate-800'
                               }`}
                             >
-                              <span className={`w-1.5 h-1.5 rounded-full ${isChildActive ? 'bg-primary' : 'bg-slate-300'}`}></span>
-                              <span>
-                                {child.name}
+                              <span className={`w-1.5 h-1.5 rounded-full ${isChildActive ? 'bg-primary' : 'bg-slate-300'} shrink-0 mt-2`}></span>
+                              <div className="flex-1">
+                                <div className="flex items-center gap-2">
+                                  <span>{child.name}</span>
+                                  {child.badge && (
+                                    <span className="badge badge-error badge-sm text-white font-bold h-5 min-w-[1.25rem] px-1.5 text-[0.7rem]">{child.badge}</span>
+                                  )}
+                                </div>
                                 {child.desc && <span className="block text-xs text-slate-400 font-normal mt-0.5 leading-tight">{child.desc}</span>}
-                              </span>
+                              </div>
                             </div>
                           </li>
                         );
@@ -220,6 +232,15 @@ const TeacherDashboard: React.FC = () => {
                 : '선택하신 메뉴의 상세 정보를 확인하고 관리할 수 있습니다.'}
             </p>
           </div>
+          {activeMenu.parent === '' && (
+            <button 
+              onClick={() => handleMenuClick('회원정보')}
+              className="btn btn-outline border-slate-300 text-slate-700 bg-white hover:bg-slate-50 font-bold gap-2 shadow-sm"
+            >
+              <User size={18} className="text-primary" />
+              내 회원정보
+            </button>
+          )}
         </header>
 
         {/* Content Placeholder based on Active Menu */}
@@ -228,7 +249,7 @@ const TeacherDashboard: React.FC = () => {
           {/* Dashboard Home (6 Cards) */}
           {activeMenu.parent === '' ? (
              <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 lg:gap-8 animate-in fade-in slide-in-from-bottom-8 duration-700">
-               {MENU_DATA.map((menu) => (
+               {MENU_DATA.filter(m => m.title !== '회원정보').map((menu) => (
                  <div 
                    key={menu.title}
                    onClick={() => handleMenuClick(menu.title, menu.children.length > 0 ? menu.children[0].name : undefined)}
@@ -304,11 +325,11 @@ const TeacherDashboard: React.FC = () => {
                 </table>
               </div>
             </div>
-          ) : activeMenu.parent === '학교정보' && activeMenu.child === '학년반관리' ? (
+          ) : activeMenu.parent === '학교정보관리' && activeMenu.child === '학년반관리' ? (
             <GradeClassManagement />
-          ) : activeMenu.parent === '학교정보' && activeMenu.child === '교사' ? (
+          ) : activeMenu.parent === '학교정보관리' && activeMenu.child === '교사관리' ? (
             <TeacherManagement />
-          ) : activeMenu.parent === '학교정보' && activeMenu.child === '학생관리' ? (
+          ) : activeMenu.parent === '학교정보관리' && activeMenu.child === '학생관리' ? (
             /* 학생관리 특별 렌더링 */
             <div className="space-y-6 animate-in slide-in-from-bottom-4 duration-500">
                <div className="flex justify-between items-end mb-4">
@@ -366,6 +387,8 @@ const TeacherDashboard: React.FC = () => {
                 </table>
               </div>
             </div>
+          ) : activeMenu.parent === '회원정보' ? (
+            <UserInfo />
           ) : (
             /* 일반적인 플레이스홀더 화면 */
             <div className="flex flex-col items-center justify-center h-full text-slate-400 space-y-6 py-20">
