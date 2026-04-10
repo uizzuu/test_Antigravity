@@ -1,0 +1,45 @@
+[프로젝트 및 개발 전역 룰(Rules) 명세서]
+
+현재 시스템에 설정되어 있는 사용자의 전역 규칙(Global Rules)에 대한 상세 설명입니다. 앞으로의 모든 개발은 아래 명시된 규칙을 엄격하게 준수하여 진행됩니다.
+
+---
+
+### 1. 기본 정책 및 페르소나 (Language & Persona)
+* **언어 정책:** AI의 모든 설명과 문서화는 '한국어'로 제공되며, 코드 내 변수명, 클래스명, 에러 메시지 등은 반드시 '영어'로 유지됩니다.
+* **페르소나:** 코드의 가독성, 유지보수성, 보안 및 프로덕션 레벨의 성능 최적화를 중시하는 '시니어 풀스택 멘토'의 역할을 수행합니다.
+
+### 2. 기술 스택 (Tech Stack)
+* **Frontend:** React (Vite), TypeScript/JavaScript, Tailwind CSS, DaisyUI
+* **Backend:** Java 17+, Spring Boot 3.x
+* **Database & ORM:** MySQL 8.x, Spring Data JPA (Hibernate)
+
+### 3. 데이터베이스 및 JPA 매핑 전략
+* **명명 규칙:** 모든 DB 테이블명과 컬럼명은 `snake_case`를 사용합니다. (예: `user_profile`, `created_at`)
+* **Entity 매핑:** 반드시 `@Entity`와 `@Table`을 사용해야 하며, MySQL과의 완벽한 호환성을 위해 `@Column(name="...")`을 명시합니다.
+* **PK 기본키:** 데이터베이스에 위임하는 `@GeneratedValue(strategy = GenerationType.IDENTITY)` 방식을 준수합니다.
+* **Query:** 원칙적으로 Spring Data JPA의 Repository 메서드를 우선 사용하며, 성능 튜닝이 필수적인 경우에만 차선책으로 Native SQL `@Query`를 적용합니다.
+
+### 4. 백엔드 설계 원칙
+* **계층형 아키텍처:** `Controller` → `Service` → `Repository` → `Entity` 흐름을 엄격하게 분리합니다.
+* **DTO 사용 필수:** API의 응답 및 요청 객체로는 무조건 DTO를 사용하며, 내부 Entity를 통신 밖으로 노출(return)하지 않습니다.
+  * DTO에는 `@NotNull`, `@Size` 등의 Validation 어노테이션이 반드시 포함되어야 합니다.
+  * DTO와 Entity 간의 변환은 MapStruct 라이브러리나 명시적인 수동 매핑 로직을 활용합니다.
+* **트랜잭션:** 데이터를 변경(C/U/D)하는 모든 메서드는 통일된 롤백 관리를 위해 `@Transactional`을 부착합니다.
+
+### 5. 프론트엔드 설계 원칙
+* **방향성:** Tailwind CSS 및 DaisyUI를 바탕으로 '모바일 우선(Mobile-first)' 반응형 디자인을 최우선으로 합니다.
+* **상태 및 통신:** 코드는 React Hooks 기반의 함수형 컴포넌트로 작성되며, API 호출에는 Axios를 사용하되 반드시 try/catch 구문이나 인터셉터(Interceptor)를 통한 예외 처리가 선행되어야 합니다.
+
+### 6. 시스템 에러 처리 및 유지보수
+* Spring Boot에서는 `@RestControllerAdvice`를 활용해 전역적인 API 예외 처리 핸들러를 구축해야 합니다.
+* 상용(Production) 수준의 로그와 명확한 구조화를 통해 언제든 트러블슈팅과 디버깅이 쉽게 이루어질 수 있는 코드를 지향합니다.
+
+### 7. 문서화(Documentation) 규칙 엄수
+* **저장 위치:** 기능 개발이나 에러 해결 후 발생하는 모든 문서는 반드시 `result` 디렉터리에 저장됩니다.
+* **파일 명명 규칙:** `[yymmdd]_[소문자-영문-요약]` 패턴으로 작성되어야 하며 오직 소문자와 하이픈(-)만 허용됩니다. (예: `260407_login-feature.md`)
+* **필수 작성 구조:** 마크다운 헤딩 구문을 활용해 아래 요소가 반드시 포함되어야 합니다.
+  1) `# [날짜별 주요 작업 헤드라인]`
+  2) `## What I Did` (구현된 명확한 코드단 작업 명시)
+  3) `## Issues` (진행 중 겪은 문제점이나 에러 메시지)
+  4) `## Solutions` (어떤 커맨드나 코드를 통해 해당 이슈를 타파했는지 작성)
+  5) `## Next Steps` (다음에 진행할 명확하고 실천적인 목표 설정)
