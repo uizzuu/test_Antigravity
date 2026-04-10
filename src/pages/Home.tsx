@@ -17,7 +17,7 @@ const Home: React.FC = () => {
           <div className="grid grid-cols-1 sm:grid-cols-2 gap-12 justify-center items-stretch mt-12 min-h-[50vh]">
             {/* Student Exam Button */}
             <Link 
-              to="/student-login"
+              to="/select-portal"
               className="btn btn-primary h-full min-h-[320px] flex-col gap-5 text-4xl shadow-2xl transition-all hover:scale-[1.02] active:scale-95 group font-black rounded-3xl"
             >
               <GraduationCap className="w-20 h-20 group-hover:-rotate-12 transition-transform" />

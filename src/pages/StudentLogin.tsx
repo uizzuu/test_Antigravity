@@ -1,9 +1,27 @@
 import React from 'react';
-import { Search, LogIn } from 'lucide-react';
+import { Search, LogIn, ArrowLeft } from 'lucide-react';
+import { useSearchParams, Link } from 'react-router-dom';
 
 const StudentLogin: React.FC = () => {
+  const [searchParams] = useSearchParams();
+  const type = searchParams.get('type');
+
+  let config = {
+    bgClass: 'from-blue-500 to-blue-700',
+    title: '국가기초학력지원포털',
+  };
+
+  if (type === 'achievement') {
+    config = { bgClass: 'from-purple-500 to-purple-800', title: '학업성취도지원포털' };
+  } else if (type === 'psychology') {
+    config = { bgClass: 'from-slate-500 to-slate-700', title: '심리검사' };
+  }
   return (
-    <div className="min-h-screen bg-gradient-to-b from-blue-400 to-blue-700 flex flex-col items-center justify-center relative overflow-hidden font-sans">
+    <div className={`min-h-screen bg-gradient-to-b ${config.bgClass} flex flex-col items-center justify-center relative overflow-hidden font-sans`}>
+      <Link to="/select-portal" className="absolute top-8 left-8 hover:bg-white/10 p-3 rounded-xl text-white flex items-center gap-2 text-lg transition-colors z-20 font-medium">
+        <ArrowLeft className="w-6 h-6" />
+        이전으로
+      </Link>
       {/* Decorative background pattern (Simplified "W" shape feel) */}
       <div className="absolute inset-0 opacity-10 pointer-events-none">
         <svg width="100%" height="100%" viewBox="0 0 100 100" preserveAspectRatio="none">
@@ -14,7 +32,7 @@ const StudentLogin: React.FC = () => {
       <div className="z-10 w-full max-w-2xl px-4">
         {/* Header Titles */}
         <div className="text-center mb-8 text-white">
-          <h1 className="text-4xl font-bold mb-2 tracking-tight">기초학력검사</h1>
+          <h1 className="text-4xl font-bold mb-2 tracking-tight">{config.title}</h1>
           <h2 className="text-2xl font-medium opacity-90">학생 로그인</h2>
         </div>
 
